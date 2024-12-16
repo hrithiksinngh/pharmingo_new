@@ -1,13 +1,13 @@
 <!-- Section 3  -->
 <div
-  class="relative w-full h-full max-h-[1700px] xs:max-h-[auto] tablet:max-h-fit bg-orange-gradient-2 font-roboto"
+  class="relative w-full h-full max-h-[1700px] xs:max-h-fit tablet:max-h-fit bg-orange-gradient-2 font-roboto"
 >
   <div
     class="bg-[url('/assets/mesh_background.svg')] bg-cover absolute block bottom-0 h-[533px] w-full"
   ></div>
 
   <div
-    class="relative flex flex-col space-y-[20px] max-w-[1440px] mx-auto px-[20px] md:px-[50px] py-[30px] md:py-[50px] tablet:px-[60px] xl:px-[20px] tablet:py-[40px]"
+    class="relative flex flex-col space-y-[20px] max-w-[1440px] mx-auto px-[20px] md:px-[50px] py-[30px] md:py-[50px] tablet:px-[60px] lg:px-[100px] tablet:py-[40px]"
   >
     <div class="max-w-[650px] tablet:max-w-[100%]">
       <div class="flex flex-col space-y-[5px]">
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div
-        class="mt-[20px] md:mt-[30px] tablet:mt-[25px] text-[14px] md:text-[15px] tablet:text-[20px] font-medium text-[#000000]/80 max-w-[650px] tablet:max-w-[100%]"
+        class="mt-[20px] md:mt-[30px] tablet:mt-[25px] text-[14px] md:text-[15px] xs:text-[18px] tablet:text-[20px] font-medium text-[#000000]/80 max-w-[650px] tablet:max-w-[100%]"
       >
         Whether you are a pharmaceutical company aiming for successful market
         entry, a financial service provider assessing investment risks, or an
@@ -28,7 +28,7 @@
         unlock insights that matter most to you in customized reports.
       </div>
       <div
-        class="mt-[20px] md:mt-[30px] tablet:mt-[25px] text-[14px] md:text-[15px] tablet:text-[20px] font-medium text-[#000000]/80 max-w-[650px] tablet:max-w-[100%]"
+        class="mt-[20px] md:mt-[30px] tablet:mt-[25px] text-[14px] xs:text-[18px] md:text-[15px] tablet:text-[20px] font-medium text-[#000000]/80 max-w-[650px] tablet:max-w-[100%]"
       >
         Our comprehensive pricing and market access data equips you with the
         tools to make informed decisions, drive strategic initiatives, and
@@ -50,7 +50,7 @@
             class="flex relative group items-center justify-between {{
               card.bgColor
             }} text-white cursor-pointer overflow-hidden transition-all duration-300"
-            [ngClass]="openedCardIndex === i || hoveredCardIndex === i ? 'min-h-[180px]' : 'h-[180px] md:h-auto tablet:h-[200px]'"
+            [ngClass]="openedCardIndex === i || hoveredCardIndex === i ? 'min-h-[180px]' : 'h-[180px] md:h-auto xs:h-[auto] tablet:h-[auto]'"
           >
             <div  class="absolute right-5 top-3 z-10 md:hidden lg:hidden">
               <svg
@@ -92,12 +92,12 @@
                   <div
                     class="flex flex-col items-start justify-center min-h-[50px] space-y-2"
                   >
-                    <h2 class="text-[12px] md:text-lg tablet:text-[18px] font-semibold">
+                    <h2 class="text-[12px] xs:text-[16px] md:text-lg tablet:text-[20px] font-semibold">
                       {{ card.title }}
                     </h2>
                     <p
                   
-                    class="text-[10px] md:text-sm tablet:text-[14px] text-white/70 mt-2 max-w-[240px] md:max-w-[400px] tablet:max-w-full tablet:pr-6">
+                    class="text-[10px] xs:text-[12px] md:text-sm tablet:text-[18px] text-white/70 mt-2 max-w-[240px] md:max-w-[400px] tablet:max-w-full tablet:pr-6">
                       {{ card.description }}
                     </p>
                   </div>
