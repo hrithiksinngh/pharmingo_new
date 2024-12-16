@@ -43,6 +43,8 @@
           class="rounded-[15px] md:rounded-[20px] tablet:rounded-[18px] shadow-md overflow-hidden"
           (mouseenter)="hoverCard(i)"
           (mouseleave)="hoverCard(null)"
+          [ngClass]="{'cursor-pointer': isMobileOrTabletView}"
+          (click)="isMobileOrTabletView ? toggleCard(i) : null"
         >
           <!-- Card Header -->
           <div
@@ -73,7 +75,7 @@
             <div class="w-full h-full">
               <div class="flex flex-1 h-full">
                 <div
-                  class="bg-white block min-w-[120px]  md:min-w-[200px] tablet:min-w-[180px] h-[130px] xs:h-full tablet:h-full md:h-[170px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] group-hover:h-[auto] md:group-hover:h-[400px] tablet:group-hover:h-[400px] min-h-[130px] md:min-h-[170px] tablet:min-h-[150px] overflow-hidden transition-all duration-500 ease-out"
+                  class="bg-white block min-w-[120px] md:min-w-[200px] tablet:min-w-[180px] h-[100%] xs:h-full tablet:h-full md:h-[170px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] group-hover:h-[auto] md:group-hover:h-[400px] tablet:group-hover:h-[400px] min-h-[130px] xs:min-h-[205px] md:min-h-[180px] tablet:min-h-[180px] overflow-hidden transition-all duration-500 ease-out"
                 >
                   <div
                     class="bg-white absolute top-0 -left-[5px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] block group-hover:hidden min-w-[120px] md:min-w-[200px] tablet:min-w-[180px] h-full"
@@ -107,7 +109,7 @@
                   >
                     <div *ngFor="let point of card.points" class="text-xs md:text-sm tablet:text-[14px] mt-4 md:mt-6 tablet:mt-5">
                       <div class="flex items-start justify-start space-x-3 md:space-x-4 tablet:space-x-3">
-                        <div class="bg-white w-[14px] md:w-[16px] tablet:w-[15px] mt-1 rounded-full z-20 flex-shrink-0">
+                        <div class="bg-white w-[14px] md:w-[16px] tablet:w-[15px] mt-1 rounded-full z-20 flex-shrink-0 h-full">
                           <img
                             src="../../assets/green_check_icon.svg"
                             alt="Check Icon"

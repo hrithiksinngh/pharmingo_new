@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './market-access-section.component.html',
   styleUrl: './market-access-section.component.css',
 })
-export class MarketAccessSectionComponent {
+export class MarketAccessSectionComponent implements OnInit {
   organizations_cards = [
     {
       title: 'Pharmaceutical Companies',
@@ -120,17 +120,37 @@ export class MarketAccessSectionComponent {
     },
   ];
 
-  openedCardIndex : any = -1; // First card is open by default
+  openedCardIndex: any = -1; // First card is open by default
+  isMobileOrTabletView: boolean = false;
 
-  toggleCard(index: number): void {
-    this.openedCardIndex = index;
+  ngOnInit(): void {
+    this.checkViewport();
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    this.checkViewport();
+  }
+
+  checkViewport(): void {
+    console.log(window.innerWidth, "rendered");
+    this.isMobileOrTabletView = window.innerWidth <= 1024; // Adjust the width as needed for your breakpoints
+  }
+
+  toggleCard(index: number): void {
+    if (this.isMobileOrTabletView) {
+      this.openedCardIndex = this.openedCardIndex === index ? -1 : index;
+    } else {
+      this.openedCardIndex = index;
+    }
+  }
 
   hoveredCardIndex: number | null = null;
 
   hoverCard(index: number | null): void {
-    this.hoveredCardIndex = index;
+    if (!this.isMobileOrTabletView) {
+      this.hoveredCardIndex = index;
+    }
   }
 
   getCardBackground(index: number): string {
@@ -138,6 +158,4 @@ export class MarketAccessSectionComponent {
       ? `../../assets/${this.organizations_cards[index].image_expansion}`
       : `../../assets/${this.organizations_cards[index].image}`;
   }
-
-  
 }
