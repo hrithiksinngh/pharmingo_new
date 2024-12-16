@@ -12,7 +12,7 @@ module.exports = {
         'ps': '550px', // for application part mobile and tablet
         'sm': {'min': '540px', 'max': '1024px'}, // tablet view
         'md': '768px',
-        'lg': '1024px',
+        'lg': '1025px',
         'xl': '1280px',
         '2xl': '1536px',
         '3xl': '1736px',

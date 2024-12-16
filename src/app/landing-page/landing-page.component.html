@@ -4,30 +4,30 @@
 
   <!-- Part 2  -->
   <div
-    class="flex flex-row relative w-full px-[100px] 3xl:px-[150px] 4xl:px-[180px] pb-[50px]"
+    class="flex flex-row xs:flex-col tablet:flex-col relative w-full px-[100px] xs:px-0 tablet:px-0 3xl:px-[150px] 4xl:px-[180px] pb-[50px] xs:pb-0 tablet:pb-0"
   >
     <div
-      class="bg-[#F2F9F8] h-[1100px] xs:h-[930px] absolute top-0 left-0 w-full"
+      class="bg-[#F2F9F8] h-[1100px] xs:h-[auto] tablet:h-[auto] lg:absolute top-0 left-0 w-full"
     >
       <app-features-section></app-features-section>
     </div>
     <div
-      class="bg-orange-gradient-2 h-[1700px] absolute top-[1100px] xs:top-[930px] tablet:top-[1218px] left-0 w-full"
+      class="bg-orange-gradient-2 h-[1700px] xs:h-[auto] tablet:h-[auto] lg:absolute top-[1100px] xs:top-[1100px] tablet:top-[1218px] left-0 w-full"
     >
       <app-market-access-section></app-market-access-section>
     </div>
     <div
-      class="bg-white h-[1200px] xs:h-[530px] absolute top-[2800px] tablet:top-[2880px] xs:top-[2630px] left-0 w-full"
+      class="bg-white h-[1200px] xs:h-[530px] xs:h-[auto] tablet:h-[auto] lg:absolute top-[2800px] tablet:top-[2880px] xs:top-[2740px] left-0 w-full"
     >
       <app-explore-packages-section></app-explore-packages-section>
     </div>
     <div
-      class="bg-[#264653] h-[2100px] xs:h-[1720px] absolute top-[4000px] tablet:top-[4110px] xs:top-[3555px] left-0 w-full"
+      class="bg-[#264653] h-[2100px] xs:h-[auto] tablet:h-[auto] lg:absolute top-[4000px] tablet:top-[4110px] xs:top-[3690px] left-0 w-full"
     >
       <app-offering-details-section></app-offering-details-section>
     </div>
     <div
-      class="bg-orange-gradient h-[500px] xs:h-[400px] absolute top-[6100px] xs:top-[5275px] left-0 w-full"
+      class="bg-orange-gradient h-[500px] xs:h-[auto] tablet:h-[auto] lg:absolute top-[6100px] xs:top-[5400px] left-0 w-full"
     >
       <app-report-generation></app-report-generation>
     </div>
@@ -626,7 +626,8 @@
   </div>
 
   <!-- Footer  -->
-  <div class="tablet:mt-[415rem] xs:mt-[351rem]">
+  <div class="">
     <app-footer></app-footer>
   </div>
 </div>
+
