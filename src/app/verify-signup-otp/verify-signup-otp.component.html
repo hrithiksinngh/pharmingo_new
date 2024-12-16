@@ -1,0 +1,64 @@
+<div
+  class="flex flex-col items-center justify-center min-h-screen bg-white px-4 py-4"
+>
+  <div
+    class="w-[350px] md:w-[550px] lg:w-[650px]  flex flex-col items-center mt-10 px-6 py-8 md:px-12 lg:px-24 lg:py-12 bg-white border-[1px] border-[#000000]/5 rounded-xl shadow-lg"
+  >
+    <div
+      class="bg-[#E76F51]/10 rounded-full h-[60px] w-[60px] flex items-center justify-center"
+    >
+      <img src="../../assets/email_icon.svg" alt="Login Icon" class="h-[30px] w-[30px]" />
+    </div>
+    <div class="mt-6 lg:mt-0 text-[24px] md:text-[28px] lg:text-[34px] text-[#000000]/85 font-roboto font-medium mb-4 text-center">
+      Please Verify your Email
+    </div>
+    <p class="mt-4 max-w-[450px] text-center text-[14px] md:text-[16px] text-[#000000]/45">
+      You're almost there! We have sent an email to
+    </p>
+
+    <div class="font-medium">{{email}}</div>
+
+    <p class="mt-4 max-w-[450px] text-center text-[14px] md:text-[16px] text-[#000000]/45">
+      We have sent you an OTP to your email to complete your signup. If you
+      don't see it, you may need to check your spam folder. Still can't find the
+      email? No problem
+    </p>
+
+    <button
+      (click)="handleResendVerification()"
+        class="mt-8 lg:mt-4 w-full bg-[#2A9D8F] text-white font-normal py-3 rounded-lg hover:bg-[#2A9D8F]/90 transition duration-300"
+      >
+        Resend Email Verification
+      </button>
+
+    <!-- <input
+      type="text"
+      [(ngModel)]="otp"
+      placeholder="Enter OTP"
+      class="mt-6 w-full border py-3 px-4 border-gray-300 rounded-[10px] text-black placeholder-black/40 focus:outline-none focus:ring-2 focus:ring-[#2A9D8F]"
+    /> -->
+
+    <!-- <div class="flex space-x-5 w-full">
+      <button
+        type="button"
+        class="mt-4 w-full bg-[#ffffff] border-[1px] border-[#2A9D8F] text-[#2A9D8F] font-medium py-3 rounded-lg  transition duration-300"
+      >
+        Resend OTP
+      </button>
+      <button
+        (click)="verifyOtp()"
+        class="mt-4 w-full bg-[#2A9D8F] text-white font-normal py-3 rounded-lg hover:bg-[#2A9D8F]/90 transition duration-300"
+      >
+        Verify OTP
+      </button>
+    </div> -->
+
+    <div *ngIf="errorMessage" class="text-red-500 mt-4 text-center">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage" class="text-green-500 mt-4 text-center">
+      {{ successMessage }}
+    </div>
+  </div>
+</div>
+

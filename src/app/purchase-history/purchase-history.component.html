@@ -1,0 +1,273 @@
+<div class="font-roboto flex flex-col items-center min-h-screen bg-white">
+  <div
+    class="flex items-center justify-between h-[60px] px-3 md:py-4 md:px-10 xl:py-4 xl:px-10 bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)] w-full"
+  >
+    <div class="flex items-center">
+      <img
+        src="../../assets/ph_logo.svg"
+        alt="Pharmingo Logo"
+        class="h-7 md:h-8 mr-3"
+      />
+      <img
+        src="../../assets/pharmingo_logo.svg"
+        alt="Pharmingo Logo"
+        class="h-7 md:h-8 mr-3"
+      />
+    </div>
+    <div class="flex items-center space-x-4 md:space-x-8">
+      <div
+        class="flex items-center relative text-black/80 text-[14px] md:text-[16px] group"
+      >
+        <span>Help</span>
+        <lucide-icon
+          [img]="HelpCircleIcon"
+          class="h-3 w-3 md:w-4 md:h-4 ml-[1px] text-[#252525]"
+          strokeWidth="2"
+        >
+        </lucide-icon>
+
+        <div
+          class="tooltip absolute -right-[110px] md:-right-[160px] top-8 w-[300px] md:w-[520px] bg-white text-black/80 px-4 py-2 rounded-[4px] shadow-2xl font-medium text-[13px] leading-[22px] hidden group-hover:block"
+        >
+          For assistance, please reach out to our support team at
+          <a href="mailto:support@pharmingo.com" class="text-black"
+            >support&#64;pharmingo.com</a
+          >
+        </div>
+      </div>
+
+      <button
+        (click)="signOut()"
+        title="Logout"
+        class="flex text-black/80 text-[14px] md:text-[16px] border border-black/80 px-3 py-[4px] md:px-6 md:py-[6px] rounded-[6px]"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="w-full max-w-7xl mx-auto pt-6 md:pt-8 xl:pt-8 pb-4 px-4">
+    <div
+      class="flex flex-col space-y-4 md:space-y-0 items-end md:flex-row lg:items-center xl:items-center justify-between w-full"
+    >
+      <div class="flex flex-col space-y-2">
+        <h1 class="text-2xl font-bold text-black/85">
+          Purchased Reports History
+        </h1>
+        <p class="text-black/45 mt-2 md:max-w-[500px] lg:w-full xl:max-w-full">
+          <span class="text-[#000000]/80 font-medium">
+            Welcome back, {{ userName }}.
+          </span>
+          Here is a summary of your previously purchased reports.
+        </p>
+      </div>
+
+      <div class="flex justify-end lg:mt-4 xl:mt-4">
+        <a
+          routerLink="/generate-report/step/1"
+          class="cursor-pointer bg-[#2A9D8F] text-white py-2 px-4 rounded-[6px] hover:bg-[#23847C]"
+        >
+          Buy New Report
+        </a>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading" class="overflow-x-auto mt-5">
+      <div
+        *ngIf="isDataFetched && purchaseHistory?.length === 0"
+        class="flex items-center justify-center w-full h-[calc(100vh-225px)] border-[1px] border-[#000000]/10 rounded-[5px] text-center p-6"
+      >
+        <p class="text-[20px] text-[#000000]/50">
+          No Purchase History Data Found
+        </p>
+      </div>
+      <div
+        *ngIf="purchaseHistory.length > 0"
+        class="lg:h-[calc(100vh-350px)] xl:h-[calc(100vh-260px)] overflow-x-auto rounded-lg border-[1px] border-t-none border-[#000000]/10 overflow-hidden"
+      >
+        <table class="min-w-full">
+          <thead class="">
+            <tr class="bg-[#264653] text-white text-left text-sm font-semibold">
+              <th class="p-4 min-w-[220px]">
+                <div class="flex items-center space-x-1">
+                  <span>Report Purchase Date</span>
+                </div>
+              </th>
+              <th class="p-4 min-w-[180px]">
+                <div class="flex items-center space-x-1">
+                  <span>Data Set</span>
+                </div>
+              </th>
+              <th class="p-4 min-w-[160px]">
+                <div class="flex items-center space-x-1">
+                  <span>Plan</span>
+                </div>
+              </th>
+              <th class="p-4 min-w-[100px] text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm text-black/85">
+            <tr
+              *ngFor="let purchase of paginatedData"
+              class="border-t last-of-type:border-b-none"
+            >
+              <td class="p-4">
+                {{ purchase.created_at | date : "dd MMM yyyy" }}
+              </td>
+              <td class="p-4">{{ purchase.dataset }}</td>
+              <td class="p-4">{{ purchase.purchase_plan_name }}</td>
+              <td class="p-4 flex items-center justify-center space-x-5">
+                <button
+                  title="Preview Report"
+                  (click)="viewReport(purchase.report_file_name)"
+                >
+                  <lucide-icon
+                    [img]="EyeIcon"
+                    class="h-5 w-5 text-black"
+                  ></lucide-icon>
+                </button>
+                <button
+                  title="Download Report"
+                  (click)="downloadReport(purchase.report_file_name)"
+                >
+                  <lucide-icon
+                    [img]="DownloadIcon"
+                    class="h-5 w-5 text-black"
+                  ></lucide-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div
+      class="flex justify-end mt-6 lg:mt-6 xl:mt-3 space-x-2"
+      *ngIf="purchaseHistory.length > rowsPerPage"
+    >
+      <!-- Previous Button -->
+      <button
+        (click)="previousPage()"
+        class="px-3 py-1 flex items-center rounded text-gray-700 hover:bg-gray-300"
+        [disabled]="currentPage === 1"
+      >
+        <lucide-icon
+          [img]="ChevronsLeftIcon"
+          class="mr-2 h-5 w-5 text-black"
+        ></lucide-icon>
+        <span>Previous</span>
+      </button>
+
+      <!-- Page Number Buttons -->
+      <button
+        *ngFor="let page of getVisiblePages()"
+        (click)="goToPage(page)"
+        class="px-3 py-1 border rounded"
+        [class.bg-gray-300]="currentPage === page"
+        [class.text-gray-700]="currentPage !== page"
+      >
+        {{ page }}
+      </button>
+
+      <!-- Ellipsis -->
+      <span *ngIf="showEllipsis()" class="px-3 py-1 text-gray-500">...</span>
+
+      <!-- Next Button -->
+      <button
+        (click)="nextPage()"
+        class="px-3 py-1 flex items-center rounded text-gray-700 hover:bg-gray-300"
+        [disabled]="currentPage === totalPages"
+      >
+        <span>Next</span>
+        <lucide-icon
+          [img]="ChevronsRightIcon"
+          class="ml-2 h-5 w-5 text-black"
+        ></lucide-icon>
+      </button>
+    </div>
+
+    <div
+      *ngIf="isLoading"
+      class="flex items-center justify-center h-[calc(100vh-225px)]"
+    >
+      <div class="text-black font-normal text-xl text-[16px]">
+        <lucide-icon
+          [img]="LoaderCircleIcon"
+          class="h-10 w-10 text-[#252525] animate-spin"
+          strokeWidth="2"
+        ></lucide-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="isViewFileModalOpen"
+  class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+>
+  <div
+    class="bg-white rounded-lg shadow-lg w-[1100px] max-h-[700px] overflow-hidden"
+  >
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b flex items-center justify-between">
+      <h3 class="text-lg font-semibold text-gray-800">Report Data</h3>
+      <button class="text-gray-400 hover:text-gray-600" (click)="closeModal()">
+        ✕
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div
+      *ngIf="!isReportDataLoading"
+      class="overflow-scroll h-[650px] custom-scroll"
+    >
+      <div class="overflow-x-auto custom-scroll">
+        <table class="min-w-full rounded-lg">
+          <thead class="bg-[#264653] text-white">
+            <tr>
+              <th
+                *ngFor="let header of tableHeaders"
+                class="px-4 py-4 text-left font-normal whitespace-nowrap"
+              >
+                {{ header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white text-gray-700">
+            <tr *ngFor="let row of tableData" class="border-b">
+              <td
+                *ngFor="let header of tableHeaders"
+                class="px-4 py-4 whitespace-nowrap"
+                [ngClass]="{
+                  'truncate max-w-[400px]':
+                    row[header] && row[header].length > 450
+                }"
+                [attr.title]="
+                  row[header] && row[header].length > 40 ? row[header] : null
+                "
+              >
+                {{ formatCellValue(row[header]) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div
+      *ngIf="isReportDataLoading"
+      class="relative bg-white w-full h-[460px] p-6"
+    >
+      <div class="flex items-center justify-center h-full w-full">
+        <div class="text-black font-normal text-xl text-[16px]">
+          <lucide-icon
+            [img]="LoaderCircleIcon"
+            class="h-10 w-10 text-[#252525] animate-spin"
+            strokeWidth="2"
+          ></lucide-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

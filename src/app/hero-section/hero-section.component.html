@@ -1,0 +1,698 @@
+<!-- Hero Section  -->
+<div
+  class="relative w-full flex flex-col items-center h-[700px] xs:h-[750px] tablet:[550px] lg:h-[700px] bg-[url('/assets/bg_hero_background.svg')] bg-cover overflow-hidden"
+>
+  <!-- Header/Navigation -->
+  <div
+    class="w-full fixed top-0 z-[100] h-[60px] tablet:h-[80px] bg-[#144860] shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)] px-[100px] xs:px-4 sm:px-8 lg:px-[100px]"
+  >
+    <div
+      class="flex items-center justify-between max-w-[1440px] mx-auto py-3 sm:py-4 lg:py-3 tablet:py-5"
+    >
+      <!-- Desktop View -->
+      <div class="xs:hidden sm:hidden lg:flex items-center">
+        <a routerLink="/" class="flex items-center cursor-pointer">
+          <img
+            src="../../assets/ph_logo_white.svg"
+            alt="Pharmingo Logo"
+            class="h-[35px] tablet:h-[45px]"
+          />
+        </a>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="flex items-center space-x-8 xs:hidden sm:hidden lg:flex">
+        <div
+          class="group relative text-white/80 text-[16px] tablet:text-[18px] cursor-pointer font-medium flex justify-between items-center"
+        >
+          Datasets
+          <div
+            class="absolute hidden group-hover:flex top-[25px] right-0 flex-col justify-between overflow-hidden w-[300px] bg-white h-[280px] rounded-[3px]"
+          >
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Pricing
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Market Access
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Treatment Cost
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Dosing Assumptions
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Regulatory Approvals
+            </div>
+          </div>
+        </div>
+        <div
+          class="group relative text-white/80 text-[16px] tablet:text-[18px] cursor-pointer font-medium flex justify-between items-center"
+        >
+          Packages
+
+          <div
+            class="absolute hidden group-hover:flex top-[25px] flex-col justify-between overflow-hidden right-0 w-[300px] bg-white h-[240px] rounded-[3px]"
+          >
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Basic Access
+            </div>
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Enhanced Access
+            </div>
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Custom Report
+            </div>
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Consultation
+            </div>
+          </div>
+        </div>
+
+        <a
+          routerLink="/login"
+          class="cursor-pointer text-white text-[16px] tablet:text-[18px] h-[32px] tablet:h-[40px] w-[90px] tablet:w-[100px] flex items-center justify-center font-medium font-roboto rounded-[6px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+        >
+          Login
+        </a>
+      </div>
+
+      <!-- Mobile View -->
+      <div
+        class="hidden xs:flex sm:flex lg:hidden items-center justify-between w-full"
+      >
+        <!-- Hamburger Menu and Logo -->
+        <div class="flex items-center space-x-2">
+          <button class="text-white p-2 z-[110]" (click)="toggleMobileMenu()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6 tablet:h-8 tablet:w-8"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a routerLink="/" class="flex items-center cursor-pointer">
+            <img
+              src="../../assets/ph_logo_white.svg"
+              alt="Pharmingo Logo"
+              class="h-[30px]"
+            />
+          </a>
+        </div>
+        <!-- Login Button -->
+        <a
+          routerLink="/login"
+          class="cursor-pointer text-white text-[14px] tablet:text-[18px] h-[32px] w-[80px] tablet:h-[38px] tablet:[90px] flex items-center justify-center font-medium font-roboto rounded-[6px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+        >
+          Login
+        </a>
+      </div>
+
+      <!-- Mobile Menu Overlay -->
+      <div
+        *ngIf="isMobileMenuOpen"
+        class="fixed inset-0 bg-black/50 z-[150] hidden xs:block sm:block lg:hidden"
+        (click)="toggleMobileMenu()"
+      >
+        <div
+          class="fixed top-0 left-0 w-[280px] tablet:w-[350px] h-full bg-[#144860] transform transition-transform duration-300 ease-in-out"
+          [ngClass]="isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'"
+          (click)="$event.stopPropagation()"
+        >
+          <!-- Mobile Menu Content -->
+          <div class="flex flex-col h-full text-white">
+            <!-- Logo and Close Button -->
+            <div
+              class="flex justify-between items-center p-4 pl-6 bg-[#144860]"
+            >
+              <a routerLink="/" class="flex items-center cursor-pointer">
+                <img
+                  src="../../assets/ph_logo_white.svg"
+                  alt="Pharmingo Logo"
+                  class="h-[30px]"
+                />
+              </a>
+              <button class="text-white p-2" (click)="toggleMobileMenu()">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Menu Items -->
+            <div class="flex flex-col px-6 bg-[#144860] mt-2">
+              <div
+                class="text-[22px] font-medium mb-4 flex justify-between items-center"
+              >
+                Datasets
+              </div>
+              <div class="flex flex-col gap-3">
+                <a
+                  (click)="scrollToFragment('datasets')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Pricing
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+                <a
+                  (click)="scrollToFragment('datasets')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Market Access
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+                <a
+                  (click)="scrollToFragment('datasets')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Treatment Cost
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+                <a
+                  (click)="scrollToFragment('datasets')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Dosing Assumptions
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+                <a
+                  (click)="scrollToFragment('datasets')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Regulatory Approvals
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              </div>
+              <div
+                class="py-3 text-[16px] text-white border-b border-gray-100/10 mt-2"
+              ></div>
+
+              <div
+                class="text-[22px] font-medium mt-8 mb-4 flex justify-between items-center"
+              >
+                Packages
+              </div>
+              <div class="flex flex-col gap-3">
+                <a
+                  (click)="scrollToFragment('packages')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Basic Access
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+                <a
+                  (click)="scrollToFragment('packages')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Enhanced Access
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+                <a
+                  (click)="scrollToFragment('packages')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Custom Report
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+                <a
+                  (click)="scrollToFragment('packages')"
+                  class="text-[16px] text-white flex justify-between items-center"
+                >
+                  Consultation
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4 ml-2"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="w-[100vw] flex items-center justify-center space-x-2 h-[40px] absolute bottom-[30px] xs:left-[50%] xs:transform xs:-translate-x-1/2"
+  >
+    <div
+      class="h-[4px] xs:h-[3px] rounded-[2px] transition-transform duratio-300 ease-in"
+      [ngClass]="
+        currentSlide === 0
+          ? 'bg-white w-[40px] xs:w-[30px] '
+          : 'bg-white/50 w-[30px] xs:w-[20px]'
+      "
+    ></div>
+    <div
+      class="h-[4px] xs:h-[3px] rounded-[2px] transition duratio-300 ease-in"
+      [ngClass]="
+        currentSlide === 1
+          ? 'bg-white w-[40px] xs:w-[30px]'
+          : 'bg-white/50 w-[30px] xs:w-[20px]'
+      "
+    ></div>
+    <div
+      class="h-[4px] xs:h-[3px] rounded-[2px] transition duratio-300 ease-in"
+      [ngClass]="
+        currentSlide === 2
+          ? 'bg-white w-[40px] xs:w-[30px]'
+          : 'bg-white/50 w-[30px] xs:w-[20px]'
+      "
+    ></div>
+    <div
+      class="h-[4px] xs:h-[3px] rounded-[2px] transition duratio-300 ease-in"
+      [ngClass]="
+        currentSlide === 3
+          ? 'bg-white w-[40px] xs:w-[30px]'
+          : 'bg-white/50 w-[30px] xs:w-[20px]'
+      "
+    ></div>
+  </div>
+
+  <div
+    class="carousel max-w-[1440px] h-[650px] xs:h-[750px] sm:h-[800px] lg:h-[650px]"
+  >
+    <!-- Slide 1 -->
+    <div
+      class="carousel-slide animate-slideInFromRight"
+      [class.active]="currentSlide === 0"
+    >
+      <div class="carousel-content">
+        <div
+          class="flex xs:flex-col sm:flex-row lg:flex-row items-center justify-between max-w-[1440px] mx-auto h-[600px] pt-[120px] xs:pt-[100px] sm:pt-[110px] lg:pt-[120px] px-[100px] 2xl:px-[50px] 3xl:px-[50px] xs:px-4 tablet:pl-10 sm:px-6 lg:px-[100px]"
+        >
+          <div
+            class="flex flex-col space-y-[30px] w-[650px] tablet:w-[44%] xs:w-full xs:space-y-5 xs:items-start xs:mb-4"
+          >
+            <div class="flex items-center space-x-4 xs:justify-center">
+              <span
+                class="text-[24px] xs:text-[18px] font-normal text-white/60"
+              >
+                Need specific data?
+              </span>
+              <span class="text-[24px] xs:text-[18px] -mt-2"> 👉 </span>
+            </div>
+
+            <div
+              class="text-white font-bold text-carousel-title xs:text-carousel-title-xs tablet:text-carousel-title-tablet leading-[58px] xs:leading-[34px] tablet:leading-[40px]"
+            >
+              Only
+              <span class="text-[#F4A261]"> pay for the data you need</span>
+              Build and download your customized report
+            </div>
+
+            <a
+              routerLink="/signup"
+              class="cursor-pointer w-[500px] tablet:w-[400px] xs:w-full text-white text-[24px] xs:text-[18px] h-[55px] xs:h-[45px] flex items-center justify-center font-medium font-roboto rounded-[6px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+            >
+              Choose data and build your report
+            </a>
+          </div>
+
+          <div
+            class="relative w-[400px] h-[350px] xs:w-[300px] xs:h-[250px] tablet:w-[350px] tablet:h-[300px] xs:mt-8"
+          >
+            <div
+              class="absolute z-10 bg-[url('/assets/bg_hero_img_1.webp')] bg-cover bg-center -top-[40px] -left-[70px] w-[300px] h-[300px] xs:w-[150px] xs:h-[150px] tablet:w-[190px] tablet:h-[190px] tablet:top-[20px] tablet:left-[10px] xs:top-[10px] xs:left-[20px] rounded-full ring-[4px] ring-white"
+            ></div>
+            <div
+              class="absolute bottom-[0px] right-[20px] xs:right-[40px] tablet:right-[30px] w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] tablet:w-[250px] tablet:h-[250px] border-[2px] border-dashed border-[#ffffff] rounded-full"
+            >
+              <div class="relative w-full h-full rounded-full">
+                <div
+                  class="bg-[url('/assets/bg_hero_img_2.webp')] bg-cover rounded-full absolute -bottom-[30px] left-[40px] xs:left-[30px] tablet:left-[35px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_3.webp')] bg-cover rounded-full absolute bottom-[20px] xs:bottom-[10px] tablet:bottom-[15px] -right-[20px] xs:-right-[10px] tablet:-right-[15px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_4.webp')] bg-cover rounded-full absolute top-[10px] xs:top-[0px] tablet:top-[5px] -right-[10px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div
+      class="carousel-slide animate-slideInFromRight"
+      [class.active]="currentSlide === 1"
+    >
+      <div class="carousel-content">
+        <div
+          class="flex xs:flex-col sm:flex-row lg:flex-row items-center justify-between max-w-[1440px] mx-auto h-[600px] pt-[120px] xs:pt-[100px] sm:pt-[110px] lg:pt-[120px] px-[100px] 2xl:px-[50px] 3xl:px-[50px] xs:px-4 sm:px-6 tablet:pl-10 lg:px-[100px]"
+        >
+          <div
+            class="flex flex-col space-y-[30px] w-[680px] tablet:w-[44%] xs:w-full xs:space-y-5 xs:items-start xs:mb-4"
+          >
+            <div class="flex items-center space-x-4 xs:justify-center">
+              <span
+                class="text-[24px] xs:text-[18px] font-normal text-white/60"
+              >
+                Transform your decision-making
+              </span>
+              <span class="text-[24px] xs:text-[18px] -mt-2"> 👉 </span>
+            </div>
+
+            <div
+              class="text-white font-bold text-carousel-title xs:text-carousel-title-xs tablet:text-carousel-title-tablet leading-[58px] xs:leading-[38px] tablet:leading-[40px]"
+            >
+              Create
+              <span class="text-[#F4A261]"> customized report</span> to answer
+              your pharmaceutical pricing and market access questions
+            </div>
+
+            <a
+              routerLink="/signup"
+              class="cursor-pointer w-[500px] tablet:w-[400px] xs:w-full text-white text-[24px] xs:text-[18px] h-[55px] xs:h-[45px] flex items-center justify-center font-medium font-roboto rounded-[6px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+            >
+              Choose data and build your report
+            </a>
+          </div>
+
+          <div
+            class="relative w-[400px] h-[350px] xs:w-[300px] xs:h-[250px] tablet:w-[350px] tablet:h-[300px] xs:mt-8"
+          >
+            <div
+              class="absolute z-10 bg-[url('/assets/bg_hero_img_4.webp')] bg-cover bg-center -top-[40px] -left-[70px] w-[300px] h-[300px] xs:w-[150px] xs:h-[150px] tablet:w-[190px] tablet:h-[190px] tablet:top-[20px] tablet:left-[10px] xs:top-[-10px] xs:left-[20px] rounded-full ring-[4px] ring-white"
+            ></div>
+            <div
+              class="absolute bottom-[0px] xs:-bottom-[20px] right-[20px] xs:right-[40px] tablet:right-[30px] w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] tablet:w-[250px] tablet:h-[250px] border-[2px] border-dashed border-[#ffffff] rounded-full"
+            >
+              <div class="relative w-full h-full rounded-full">
+                <div
+                  class="bg-[url('/assets/bg_hero_img_1.webp')] bg-cover rounded-full absolute -bottom-[30px] left-[40px] xs:left-[65px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_2.webp')] bg-cover rounded-full absolute bottom-[20px] -right-[20px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_3.webp')] bg-cover rounded-full absolute top-[10px] -right-[10px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+
+    <div
+      class="carousel-slide animate-slideInFromRight"
+      [class.active]="currentSlide === 2"
+    >
+      <div class="carousel-content">
+        <div
+          class="flex xs:flex-col sm:flex-row lg:flex-row items-center justify-between max-w-[1440px] mx-auto h-[600px] pt-[120px] xs:pt-[100px] sm:pt-[110px] lg:pt-[120px] px-[100px] 2xl:px-[50px] 3xl:px-[50px] xs:px-4 sm:px-6 tablet:pl-10 lg:px-[100px]"
+        >
+          <div
+            class="flex flex-col space-y-[30px] w-[580px] tablet:w-[44%] xs:w-full xs:space-y-5 xs:items-start xs:mb-4"
+          >
+            <div class="flex items-center space-x-4 xs:justify-center">
+              <span
+                class="text-[24px] xs:text-[18px] font-normal text-white/60"
+              >
+                Elevate your pharmaceutical strategy
+              </span>
+              <span class="text-[24px] xs:text-[18px] -mt-2"> 👉 </span>
+            </div>
+
+            <div
+              class="text-white font-bold text-[42px] xs:text-[28px] tablet:text-carousel-title-tablet leading-[58px] xs:leading-[38px] tablet:leading-[40px]"
+            >
+              Create
+              <span class="text-[#F4A261]"> customized reports</span> for your
+              pricing and market access needs 
+            </div>
+
+            <a
+              routerLink="/signup"
+              class="cursor-pointer w-[500px] tablet:w-[400px] xs:w-full text-white text-[24px] xs:text-[18px] h-[55px] xs:h-[45px] flex items-center justify-center font-medium font-roboto rounded-[6px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+            >
+              Choose data and build your report
+            </a>
+          </div>
+
+          <div
+            class="relative w-[400px] h-[350px] xs:w-[300px] xs:h-[250px] tablet:w-[350px] tablet:h-[300px] xs:mt-8"
+          >
+            <div
+              class="absolute z-10 bg-[url('/assets/bg_hero_img_3.webp')] bg-cover bg-center -top-[40px] -left-[70px] w-[300px] h-[300px] xs:w-[150px] xs:h-[150px] tablet:w-[190px] tablet:h-[190px] tablet:top-[20px] tablet:left-[10px] xs:top-[10px] xs:left-[20px] rounded-full ring-[4px] ring-white"
+            ></div>
+            <div
+              class="absolute bottom-[0px] right-[20px] xs:right-[40px] tablet:right-[30px] w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] tablet:w-[250px] tablet:h-[250px] border-[2px] border-dashed border-[#ffffff] rounded-full"
+            >
+              <div class="relative w-full h-full rounded-full">
+                <div
+                  class="bg-[url('/assets/bg_hero_img_4.webp')] bg-cover rounded-full absolute -bottom-[30px] left-[40px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_1.webp')] bg-cover rounded-full absolute bottom-[20px] xs:bottom-[10px] tablet:bottom-[15px] -right-[20px] xs:-right-[15px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_2.webp')] bg-cover rounded-full absolute top-[10px] -right-[10px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div
+      class="carousel-slide animate-slideInFromRight"
+      [class.active]="currentSlide === 3"
+    >
+      <div class="carousel-content">
+        <div
+          class="flex xs:flex-col sm:flex-row lg:flex-row items-center justify-between max-w-[1440px] mx-auto h-[600px] pt-[120px] xs:pt-[100px] sm:pt-[110px] lg:pt-[120px] px-[100px] 2xl:px-[50px] 3xl:px-[50px] xs:px-4 sm:px-6 tablet:pl-10 lg:px-[100px]"
+        >
+          <div
+            class="flex flex-col space-y-[30px] w-[670px] tablet:w-[44%] xs:w-full xs:space-y-5 xs:items-start xs:mb-4"
+          >
+            <div class="flex items-center space-x-4 xs:justify-center">
+              <span
+                class="text-[24px] xs:text-[18px] font-normal text-white/60"
+              >
+                Transform your decision-making
+              </span>
+              <span class="text-[24px] xs:text-[18px] -mt-2"> 👉 </span>
+            </div>
+
+            <div
+              class="text-white font-bold text-[42px] xs:text-[28px] tablet:text-carousel-title-tablet leading-[58px] xs:leading-[38px] tablet:leading-[40px]"
+            >
+              Select
+              <span class="text-[#F4A261]"
+                >the market access & pricing data</span
+              >
+              that meets your needs. Fast. Accurate. Available Now
+            </div>
+
+            <a
+              routerLink="/signup"
+              class="cursor-pointer w-[500px] tablet:w-[400px] xs:w-full text-white text-[24px] xs:text-[18px] h-[55px] xs:h-[45px] flex items-center justify-center font-medium font-roboto rounded-[6px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+            >
+              Choose data and build your report
+            </a>
+          </div>
+
+          <div
+            class="relative w-[400px] h-[350px] xs:w-[300px] xs:h-[250px] tablet:w-[350px] tablet:h-[300px] xs:mt-8"
+          >
+            <div
+              class="absolute z-10 bg-[url('/assets/bg_hero_img_2.webp')] bg-cover bg-center -top-[40px] -left-[70px] w-[300px] h-[300px] xs:w-[150px] xs:h-[150px] tablet:w-[190px] tablet:h-[190px] tablet:top-[20px] tablet:left-[10px] xs:top-[-10px] xs:left-[20px] rounded-full ring-[4px] ring-white"
+            ></div>
+            <div
+              class="absolute bottom-[0px] xs:-bottom-[20px] right-[20px] xs:right-[40px] tablet:right-[30px] w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] tablet:w-[250px] tablet:h-[250px] border-[2px] border-dashed border-[#ffffff] rounded-full"
+            >
+              <div class="relative w-full h-full rounded-full">
+                <div
+                  class="bg-[url('/assets/bg_hero_img_3.webp')] bg-cover rounded-full absolute -bottom-[30px] left-[40px] xs:left-[65px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_4.webp')] bg-cover rounded-full absolute bottom-[20px] -right-[20px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+
+                <div
+                  class="bg-[url('/assets/bg_hero_img_1.webp')] bg-cover rounded-full absolute top-[10px] -right-[10px] h-[100px] w-[100px] xs:h-[70px] xs:w-[70px] tablet:h-[85px] tablet:w-[85px]"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

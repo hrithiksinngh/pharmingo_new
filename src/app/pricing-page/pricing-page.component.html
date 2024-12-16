@@ -1,0 +1,68 @@
+
+ 
+
+  <div
+    class="grid grid-cols-1 py-[30px] gap-y-4  w-full px-4 overflow-y-auto md:overflow-hidden  md:px-4 md:mt-[80px]  md:py-0  md:grid-cols-2 md:max-w-[700px] md:gap-6 lg:gap-12 lg:max-w-[800px] xl:grid-cols-4 xl:gap-6 xl:max-w-7xl mx-auto"
+  >
+    <div
+      *ngFor="let plan of pricingPlans"
+      class="cursor-pointer hover:border-[#E76F51]/80 transition-all duration-300 ease-linear rounded-lg shadow-lg flex flex-col items-center h-[350px] md:h-[350px] lg:h-[400px]"
+      [ngClass]="{
+        'bg-[#E76F51]/5 border-[1px] border-[#E76F51]/80 ': plan.isSelected,
+        'bg-[#FFFFFF] border border-gray-200': !plan.isSelected
+      }"
+      
+      >
+      <!-- Highlight Tag -->
+      <!-- <div *ngIf="plan.highlight" class="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">
+        {{ plan.highlight }}
+      </div> -->
+
+      <!-- Card Content -->
+      <div
+        class="w-full flex flex-col border-b-[1px] border-[#000000]/10 px-6 py-5"
+      >
+        <h2 class="text-[22px] font-semibold text-[#000000]/80">
+          {{ plan.title }}
+        </h2>
+        <p class="text-[36px] font-bold text-[#000000]/80">${{ plan.price }}</p>
+      </div>
+
+      <div class=" flex flex-col flex-1 justify-between px-6 py-5">
+        <div class="space-y-3 text-black/70 text-sm">
+          <div
+            *ngFor="let feature of plan.features"
+            class="flex items-start space-x-2"
+          >
+            <div>
+              <svg
+                stroke="currentColor"
+                fill="#2A9D8F"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                height="1em"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-[14px] w-[14px] mt-[3px]"
+              >
+                <path
+                  d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+                ></path>
+              </svg>
+            </div>
+            <span class="text-[14px] font-normal text-[#000000]/60">{{
+              feature
+            }}</span>
+          </div>
+        </div>
+
+        <button
+        (click)="handlePlanSelection(plan)"
+          class=" mt-6 w-full bg-[#2A9D8F] text-[16px] text-white py-2 px-4 rounded-[6px] hover:bg-[#23847C]"
+        >
+          {{ plan.buttonText }}
+        </button>
+      </div>
+    </div>
+  </div>
+

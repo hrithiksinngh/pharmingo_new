@@ -1,0 +1,306 @@
+<!-- Topic Selection Cards -->
+<div
+  class="flex flex-col gap-6 overflow-y-auto pt-[60px] pb-[80px] md:gap-3 md:pt-0 md:pb-0 xl:max-w-[970px] xl:mx-auto place-items-center lg:pt-[20px] xl:pt-[10px]"
+>
+  <div class="hidden lg:flex flex-row items-center justify-center mt-10 gap-8  xl:gap-6">
+    <div
+      *ngFor="let topic of topics_1"
+      [ngClass]="{
+        'bg-[#E76F51]/5 border-[1px] border-[#E76F51]/80 ': topic.isSelected,
+        'bg-[#FFFFFF] border border-gray-200': !topic.isSelected
+      }"
+      (click)="selectTopic(topic)"
+      class="hover:border-[#E76F51]/80 transition-all duration-300 ease-linear cursor-pointer rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)] py-6 px-6 w-[300px] flex flex-col items-start relative h-[220px]"
+    >
+      <div
+        class="z-10 bg-[#E76F51] flex justify-start pl-4 h-[35px] min-w-[160px] text-[16px] items-center font-semibold rounded-br-full text-white absolute -top-[16px] -left-[15px]"
+      >
+        <div
+          class="h-[35px] w-[3px] topic-card-tag -skew-x-[15deg] mr-[10px]"
+        ></div>
+        {{ topic.title }}
+      </div>
+      <div
+        class="absolute block h-[20px] w-[20px] rotate-45 skew-x-[45deg] top-[3px] -left-[18px] bg-[#C74A2B]"
+      ></div>
+
+      <div class="w-full flex flex-1 flex-col items-start justify-between">
+        <!-- Coverage List -->
+        <div class="flex flex-col space-y-2">
+          <p class="text-black/70 font-semibold mt-4">Coverage:</p>
+          <div class="mt-2 text-black/70 text-sm space-y-1">
+            <div
+              *ngFor="let item of topic.coverage"
+              class="flex items-center space-x-2"
+            >
+              <lucide-icon
+                [img]="CheckIcon"
+                class="h-3 w-3 text-[#2A9D8F]"
+              ></lucide-icon>
+              <span>{{ item }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Endpoints Link -->
+        <div class="w-full flex flex-col space-y-4">
+          <div class="w-full flex items-center space-x-2 mt-4">
+            <p class="text-[15px] font-roboto font-medium text-[#000000]/80">
+              Data Endpoints
+            </p>
+            <div
+              (click)="handleViewDetails(topic.title)"
+              class="text-[12px] text-[#0F65B5]/65 cursor-pointer"
+            >
+              ( View Details )
+            </div>
+          </div>
+
+          <!-- Action Button -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden lg:flex flex-row items-center justify-center mt-12 gap-8  xl:gap-6 xl:mt-6">
+    <div
+      *ngFor="let topic of topics_2"
+      [ngClass]="{
+        'bg-[#E76F51]/5 border-[1px] border-[#E76F51]/80 ': topic.isSelected,
+        'bg-[#FFFFFF] border border-gray-200': !topic.isSelected
+      }"
+      (click)="selectTopic(topic)"
+      class="border border-gray-200 bg-[#FFFFFF] hover:border-[#E76F51]/80 transition-all duration-300 ease-linear cursor-pointer rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)] py-6 px-6 w-[300px] flex flex-col items-start relative h-[220px]"
+    >
+      <div
+        class="z-10 bg-[#E76F51] flex justify-start pl-4 h-[35px] min-w-[210px] text-[16px] items-center font-semibold rounded-br-full text-white absolute -top-[16px] -left-[15px]"
+      >
+        <div
+          class="h-[35px] w-[3px] topic-card-tag -skew-x-[15deg] mr-[10px]"
+        ></div>
+        {{ topic.cardTitle }}
+      </div>
+      <div
+        class="absolute block h-[20px] w-[20px] rotate-45 skew-x-[45deg] top-[3px] -left-[18px] bg-[#C74A2B]"
+      ></div>
+
+      <div class="w-full flex flex-1 flex-col items-start justify-between">
+        <!-- Coverage List -->
+        <div class="flex flex-col space-y-2">
+          <p class="text-black/70 font-semibold mt-4">Coverage:</p>
+          <div class="mt-2 text-black/70 text-sm space-y-1">
+            <div
+              *ngFor="let item of topic.coverage"
+              class="flex items-center space-x-2"
+            >
+              <lucide-icon
+                [img]="CheckIcon"
+                class="h-3 w-3 text-[#2A9D8F]"
+              ></lucide-icon>
+              <span>{{ item }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Endpoints Link -->
+        <div class="w-full flex flex-col space-y-4">
+          <div class="w-full flex items-center space-x-2 mt-4">
+            <p class="text-[15px] font-roboto font-medium text-[#000000]/80">
+              Data Endpoints
+            </p>
+            <div
+              (click)="handleViewDetails(topic.title)"
+              class="text-[12px] text-[#0F65B5]/65 cursor-pointer"
+            >
+              ( View Details )
+            </div>
+          </div>
+
+          <!-- Action Button -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="grid grid-cols-1 w-full md:max-w-2xl place-items-center gap-y-10 md:gap-x-8 md:gap-y-10 md:grid-cols-2 md:mt-6 lg:hidden"
+  >
+    <div
+      *ngFor="let topic of topics_1"
+      [ngClass]="{
+        'bg-[#E76F51]/5 border-[1px] border-[#E76F51]/80 ': topic.isSelected,
+        'bg-[#FFFFFF] border border-gray-200': !topic.isSelected
+      }"
+      (click)="selectTopic(topic)"
+      class="hover:border-[#E76F51]/80 transition-all duration-300 ease-linear cursor-pointer rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)] py-6 px-6 w-[300px] flex flex-col items-start relative h-[220px]"
+    >
+      <div
+        class="z-10 bg-[#E76F51] flex justify-start pl-4 h-[35px] min-w-[160px] text-[16px] items-center font-semibold rounded-br-full text-white absolute -top-[16px] -left-[15px]"
+      >
+        <div
+          class="h-[35px] w-[3px] topic-card-tag -skew-x-[15deg] mr-[10px]"
+        ></div>
+        {{ topic.title }}
+      </div>
+      <div
+        class="absolute block h-[20px] w-[20px] rotate-45 skew-x-[45deg] top-[3px] -left-[18px] bg-[#C74A2B]"
+      ></div>
+
+      <div class="w-full flex flex-1 flex-col items-start justify-between">
+        <!-- Coverage List -->
+        <div class="flex flex-col space-y-2">
+          <p class="text-black/70 font-semibold mt-4">Coverage:</p>
+          <div class="mt-2 text-black/70 text-sm space-y-1">
+            <div
+              *ngFor="let item of topic.coverage"
+              class="flex items-center space-x-2"
+            >
+              <lucide-icon
+                [img]="CheckIcon"
+                class="h-3 w-3 text-[#2A9D8F]"
+              ></lucide-icon>
+              <span>{{ item }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Endpoints Link -->
+        <div class="w-full flex flex-col space-y-4">
+          <div class="w-full flex items-center space-x-2 mt-4">
+            <p class="text-[15px] font-roboto font-medium text-[#000000]/80">
+              Data Endpoints
+            </p>
+            <div
+              (click)="handleViewDetails(topic.title)"
+              class="text-[12px] text-[#0F65B5]/65 cursor-pointer"
+            >
+              ( View Details )
+            </div>
+          </div>
+
+          <!-- Action Button -->
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngFor="let topic of topics_2"
+      [ngClass]="{
+        'bg-[#E76F51]/5 border-[1px] border-[#E76F51]/80 ': topic.isSelected,
+        'bg-[#FFFFFF] border border-gray-200': !topic.isSelected,
+        'md:col-span-2': topic.cardTitle === 'Regulatory Approvals',
+      }"
+      (click)="selectTopic(topic)"
+      class="border border-gray-200 bg-[#FFFFFF] hover:border-[#E76F51]/80 transition-all duration-300 ease-linear cursor-pointer rounded-lg shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)] py-6 px-6 w-[300px] flex flex-col items-start relative h-[220px]"
+    >
+      <div
+        class="z-10 bg-[#E76F51] flex justify-start pl-4 h-[35px] min-w-[210px] text-[16px] items-center font-semibold rounded-br-full text-white absolute -top-[16px] -left-[15px]"
+      >
+        <div
+          class="h-[35px] w-[3px] topic-card-tag -skew-x-[15deg] mr-[10px]"
+        ></div>
+        {{ topic.cardTitle }}
+      </div>
+      <div
+        class="absolute block h-[20px] w-[20px] rotate-45 skew-x-[45deg] top-[3px] -left-[18px] bg-[#C74A2B]"
+      ></div>
+
+      <div class="w-full flex flex-1 flex-col items-start justify-between">
+        <!-- Coverage List -->
+        <div class="flex flex-col space-y-2">
+          <p class="text-black/70 font-semibold mt-4">Coverage:</p>
+          <div class="mt-2 text-black/70 text-sm space-y-1">
+            <div
+              *ngFor="let item of topic.coverage"
+              class="flex items-center space-x-2"
+            >
+              <lucide-icon
+                [img]="CheckIcon"
+                class="h-3 w-3 text-[#2A9D8F]"
+              ></lucide-icon>
+              <span>{{ item }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Endpoints Link -->
+        <div class="w-full flex flex-col space-y-4">
+          <div class="w-full flex items-center space-x-2 mt-4">
+            <p class="text-[15px] font-roboto font-medium text-[#000000]/80">
+              Data Endpoints
+            </p>
+            <div
+              (click)="handleViewDetails(topic.title)"
+              class="text-[12px] text-[#0F65B5]/65 cursor-pointer"
+            >
+              ( View Details )
+            </div>
+          </div>
+
+          <!-- Action Button -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    (click)="onNavigateToPricing()"
+    [disabled]="!filterService.getState().selectedTopic"
+    class="hidden  lg:block mt-10 xl:mt-0 disabled:opacity-50 disabled:cursor-not-allowed text-[18px] font-medium font-roboto py-2 px-4 rounded-[6px] w-[150px] mx-auto border-[1px] bg-[#2A9D8F] text-[#ffffff] hover:bg-[#2A9D8F]/8-transition duration-300 ease-linear"
+  >
+    Next
+  </button>
+
+  <div
+    class="fixed bottom-0 w-full h-[60px] md:h-[80px] bg-white shadow-[0px_-4px_4px_0px_rgba(0,0,0,0.06)] flex items-center justify-center z-20 lg:hidden"
+  >
+    <button
+      (click)="onNavigateToPricing()"
+      [disabled]="!filterService.getState().selectedTopic"
+      class="disabled:opacity-50 disabled:cursor-not-allowed text-[18px] font-medium font-roboto py-2 px-4 rounded-[6px] w-[150px] mx-auto border-[1px] bg-[#2A9D8F] text-[#ffffff] hover:bg-[#2A9D8F]/8-transition duration-300 ease-linear"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
+<!-- Modal for Viewing Topic Details  -->
+
+<div
+  class="z-30 fixed inset-0 bg-gray-700 bg-opacity-75 px-2 md:px-6 lg:px-0 flex justify-center items-center"
+  *ngIf="isViewDetailModalOpen"
+>
+  <div class="bg-white rounded-lg mt-10 md:mt-0 shadow-lg max-w-4xl max-h-[550px] md:max-h-[600px] w-full p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold">Choose one of the following</h2>
+
+      <lucide-icon
+        (click)="closeViewDetailModal()"
+        [img]="XIcon"
+        class="h-6 w-6 cursor-pointer text-black"
+      ></lucide-icon>
+    </div>
+
+    <!-- Table for Topic Details -->
+    <div
+      class="flex flex-col h-[450px] overflow-auto md:h-[500px] md:overflow-y-scroll custom-scroll rounded-lg border-[1px] border-t-none border-[#000000]/10"
+    >
+      <table class="w-full bg-white rounded-lg shadow-md">
+        <thead>
+          <tr
+            class="sticky top-0 bg-[#264653] text-white text-left text-sm font-semibold"
+          >
+            <th class="text-left min-w-[200px] md:w-auto p-4 border-b font-medium w-[250px]">Field</th>
+            <th class="text-left min-w-[350px] md:w-auto p-4 border-b font-medium">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of selectedTopicDetails?.details">
+            <td class="p-4 border-b">{{ detail.field }}</td>
+            <td class="p-4 border-b">{{ detail.field_description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

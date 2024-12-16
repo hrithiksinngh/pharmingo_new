@@ -1,0 +1,31 @@
+<div class="font-roboto flex flex-col items-center justify-center min-h-screen">
+  <div
+    class="w-[350px] md:w-[550px] lg:w-[650px] mx-auto flex flex-col items-center mt-10 px-6 md:px-12 lg:px-24 py-12 bg-white border-[1px] border-[#000000]/5 rounded-xl shadow-lg"
+  >
+    <div
+      class="rounded-full h-[100px] w-[100px] flex items-center justify-center mb-1"
+    >
+      <img src="../../assets/cross_icon.svg" alt="Login Icon" class="h-[100px] w-[100px]" />
+    </div>
+    <div
+      class="text-[24px] md:text-[28px] lg:text-[34px] text-[#000000]/85 font-roboto font-medium text-center"
+    >
+      Payment Failed !!
+    </div>
+
+    <p class="mt-6 max-w-[450px] text-center text-[14px] md:text-[16px] text-[#000000]/45">
+      Unfortunately, your payment didn’t go through. Please check your payment
+      details or try a different method, and feel free to contact support if you
+      need assistance.
+    </p>
+
+    <div class="flex w-full">
+      <button
+        (click)="purchaseReport()"
+        class="w-[250px] mx-auto mt-6 py-3 text-white text-[16px] font font-medium rounded-md bg-[#2A9D8F] hover:bg-[#1E7A6E]"
+      >
+        Try Again
+      </button>
+    </div>
+  </div>
+</div>

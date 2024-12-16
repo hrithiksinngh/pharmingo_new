@@ -1,0 +1,415 @@
+<div class="px-2 pt-8 md:px-6 lg:px-12 lg:pt-2 bg-white font-roboto">
+  <!-- Filter Section -->
+
+  <div
+    class="relative flex flex-col px-1 md:px-0 md:flex-row md:items-start lg:items-center justify-between mb-6"
+  >
+    <div class="flex flex-col">
+      <div
+        class="flex space-x-4 w-full py-2 3xl:py-3 px-3 border-[1px] border-[#000000]/10 rounded-[6px] min-w-[280px]"
+      >
+        <div class="text-[16px] 3xl:text-[22px] text-[#000000]/60">
+          Filtered by
+          <span class="uppercase">{{
+            this.filterService.getState().filterValues.currentTab
+          }}</span>
+        </div>
+        <div
+          class="flex items-center justify-center border-l-[2px] border-[#000000]/10"
+        >
+          <button  class="text-[16px] px-3 3xl:text-[22px] font-medium max-w-[180px] md:w-full overflow-hidden truncate md:overflow-auto">
+            {{ this.filterService.getState().filterValues.tabValue || label }}
+            <!-- Default to 'Select' if no option is selected -->
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div
+        class="flex items-center space-x-5 w-full py-2 3xl:py-3 md:w-[320px] 3xl:w-[450px] border-[1px] border-[#000000]/10 rounded-[6px] min-w-[280px] mt-4 md:mt-2"
+      >
+        <button
+          *ngFor="let tab of tabs"
+          (click)="selectTab(tab)"
+          [class.text-[#2A9D8F]]="
+            this.filterService.getState().filterValues.currentTab === tab
+          "
+          class="w-full text-[16px] 3xl:text-[22px] text-center uppercase"
+        >
+          {{ tab }}
+        </button>
+      </div>
+
+      <div
+        id="dropdown-1"
+        *ngIf="isDropdownOpen"
+        class="z-20 w-[350px] absolute top-[100px] h-[280px] bg-white border border-[#000000]/10 rounded-md shadow-lg"
+      >
+        <!-- Search Box -->
+        <div class="mt-4 p-2">
+          <input
+            type="text"
+            [(ngModel)]="searchQuery"
+            class="w-full p-2 text-[#000000]/40 text-[14px] font-normal bg-[#F5F5F5] rounded-md"
+            placeholder="Search by {{
+              this.filterService.getState().filterValues.currentTab
+            }}"
+          />
+        </div>
+
+        <!-- Tab Options -->
+        <div class="max-h-[200px] overflow-y-auto">
+          <div
+            *ngFor="let option of filteredOptions"
+            (click)="selectTabsOption(option)"
+            [class.bg-[#f0f0f0]]="
+              this.filterService.getState().filterValues.tabValue === option
+            "
+            class="p-2 cursor-pointer hover:bg-[#f5f5f5] border-b-[1px] border-[#000000]/5 py-3"
+          >
+            {{ option }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex items-center mt-4 md:mt-0 md:px-0 space-x-6">
+      <button
+        (click)="toggleCustomizeColumnsModal()"
+        class="px-6 py-[6px] text-[16px] 3xl:text-[22px] font-medium text-[#2A9D8F] rounded-md border-[2px] border-[#2A9D8F]/90"
+      >
+        Customize columns
+      </button>
+      <button
+        [disabled]="isFilteredApplied"
+        (click)="navigateToPurchaseReport()"
+        class="disabled:cursor-not-allowed disabled:opacity-50 px-6 py-2 w-[130px] md:w-[150px] text-[16px] 3xl:text-[22px] font-medium text-white bg-[#2A9D8F] rounded-md hover:bg-[#2a9d8f]/90"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="mt-4 flex flex-col pt-4 border-[1px] border-[#000000]/10 rounded-[6px] overflow-hidden"
+  >
+    <!-- Table Header and Filters -->
+    <div class="flex items-start lg:items-center justify-between mb-6 px-3 md:px-8">
+      <div class="flex flex-col space-y-1">
+        <div class="text-[16px] md:text-xl 3xl:text-[26px] font-semibold text-black/85">
+          Report preview
+        </div>
+        <span class="text-[13px] md:text-[14px] 3xl:text-[18px] font-normal text-black/60"
+          >(Preview records count:
+          {{
+            this.filterService.getState().filterValues.totalRecordsCount >= 5
+              ? "5 out of " +
+                this.filterService.getState().filterValues.totalRecordsCount
+              : this.filterService.getState().filterValues.totalRecordsCount +
+                " of " +
+                this.filterService.getState().filterValues.totalRecordsCount
+          }})</span
+        >
+      </div>
+      <div class="hidden lg:flex gap-4">
+        <app-custom-dropdown
+          buttonClasses="border-[1px] border-[#000000]/10"
+          label="Country"
+          [options]="this.filterService.getState().filterValues.countryOptions"
+          [isFilteredApplied]="isFilteredApplied"
+          (selectionChange)="onCountryChange($event)"
+        ></app-custom-dropdown>
+        <app-custom-dropdown
+          buttonClasses="border-[1px] border-[#000000]/10"
+          label="Brand"
+          [options]="this.filterService.getState().filterValues.brandOptions"
+          [isFilteredApplied]="isFilteredApplied"
+          (selectionChange)="onBrandChange($event)"
+        ></app-custom-dropdown>
+        <app-custom-dropdown
+          buttonClasses="border-[1px] border-[#000000]/10"
+          label="INN"
+          [options]="this.filterService.getState().filterValues.innOptions"
+          [isFilteredApplied]="isFilteredApplied"
+          (selectionChange)="onInnChange($event)"
+        ></app-custom-dropdown>
+
+        <button
+          (click)="applyFilters()"
+          [disabled]="isApplyFiltersDisabled"
+          class="disabled:opacity-50 disabled:cursor-not-allowed px-6 py-1 text-[16px] 3xl:text-[22px] bg-[#2A9D8F] text-white font-medium disabled:bg-white disabled:text-[#2A9D8F] disabled:border-[2px] disabled:border-[#2A9D8F]/90 rounded-md"
+        >
+          Apply filters
+        </button>
+      </div>
+
+      <button
+        (click)="openFilterModal()"
+        class="flex lg:hidden items-center px-4 py-1 text-[15px] md:text-[16px] 3xl:text-[22px] bg-white text-[#2A9D8F] font-medium border-[2px] border-[#2A9D8F]/90 rounded-md"
+      >
+        <lucide-icon
+          [img]="FilterIcon"
+          class="h-[14px] w-[14px] cursor-pointer mr-2 text-[#2A9D8F]"
+        ></lucide-icon>
+        Filters
+      </button>
+
+      <div
+        class="px-3 lg:hidden font-roboto z-30 fixed inset-0 bg-gray-700 bg-opacity-75 flex justify-center items-center"
+        *ngIf="isFilterModalOpen"
+      >
+        <div
+          class="bg-white rounded-lg shadow-lg max-w-5xl mt-10 h-[520px] max-h-[580px] w-full p-6 flex flex-col"
+        >
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Apply Filters</h2>
+            <lucide-icon
+              (click)="closeFilterModal()"
+              [img]="XIcon"
+              class="h-6 w-6 cursor-pointer text-black"
+            ></lucide-icon>
+          </div>
+          <div>
+            <div class="mt-6 grid grid-cols-1 gap-y-10">
+              <app-custom-dropdown
+                buttonClasses="border-[1px] border-[#000000]/10"
+                label="Country"
+                [options]="
+                  this.filterService.getState().filterValues.countryOptions
+                "
+                [isFilteredApplied]="isFilteredApplied"
+                (selectionChange)="onCountryChange($event)"
+              ></app-custom-dropdown>
+              <app-custom-dropdown
+                buttonClasses="border-[1px] border-[#000000]/10"
+                label="Brand"
+                [options]="
+                  this.filterService.getState().filterValues.brandOptions
+                "
+                [isFilteredApplied]="isFilteredApplied"
+                (selectionChange)="onBrandChange($event)"
+              ></app-custom-dropdown>
+              <app-custom-dropdown
+                buttonClasses="border-[1px] border-[#000000]/10"
+                label="INN"
+                [options]="
+                  this.filterService.getState().filterValues.innOptions
+                "
+                [isFilteredApplied]="isFilteredApplied"
+                (selectionChange)="onInnChange($event)"
+              ></app-custom-dropdown>
+
+              <button
+                (click)="applyFilters()"
+                [disabled]="isApplyFiltersDisabled"
+                class="mt-[120px] disabled:opacity-50 disabled:cursor-not-allowed px-6 py-2 text-[16px] 3xl:text-[22px] bg-[#2A9D8F] text-white font-medium disabled:bg-white disabled:text-[#2A9D8F] disabled:border-[2px] disabled:border-[#2A9D8F]/90 rounded-md"
+              >
+                Apply filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div *ngIf="!isFilteredDataLoading" class="overflow-x-auto custom-scroll">
+      <table class="min-w-full rounded-lg">
+        <thead class="bg-[#264653] text-white">
+          <tr>
+            <th
+              *ngFor="
+                let header of this.filterService.getState().filterValues
+                  .tableHeaders
+              "
+              class="px-4 py-4 text-[16px] 3xl:py-5 4xl:py-6 3xl:text-[20px] text-left font-normal whitespace-nowrap"
+            >
+              {{
+                header === "moa"
+                  ? "MOA"
+                  : header === "inn"
+                  ? "INN"
+                  : header === "whoatc_name"
+                  ? "WHOATC Name"
+                  : header === "top_level_indication_name"
+                  ? "Indication"
+                  : formatHeader(header)
+              }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white text-gray-700">
+          <tr
+            *ngFor="
+              let row of this.filterService.getState().filterValues.tableData
+            "
+            class="border-b"
+          >
+            <td
+              *ngFor="
+                let header of this.filterService.getState().filterValues
+                  .tableHeaders
+              "
+              class="px-4 py-4 text-[16px] 3xl:py-5 4xl:py-6 3xl:text-[20px] whitespace-nowrap mix-blend-multiply"
+              [ngClass]="{
+                'blur-[6px]': blurColumnsList.includes(header),
+                'truncate max-w-[450px]':
+                  row[header] && row[header].length > 100,
+                'text-right': isNumeric(header)
+              }"
+              [attr.title]="
+                row[header] && row[header].length > 100 ? row[header] : null
+              "
+            >
+              {{
+                dateColumnsList.includes(header)
+                  ? formatDate(row[header])
+                  : formatCellValue(row[header])
+              }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      *ngIf="isFilteredDataLoading"
+      class="flex items-center justify-center h-[400px]"
+    >
+      <div class="text-black font-normal text-xl text-[16px]">
+        <lucide-icon
+          [img]="LoaderCircleIcon"
+          class="h-10 w-10 text-[#252525] animate-spin"
+          strokeWidth="2"
+        ></lucide-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-start space-x-3 2xl:space-x-6 mt-4 font-roboto">
+    <div
+      class="text-[12px] 2xl:text-[14px] 3xl:text-[16px] 4xl:text-[24px] font-medium text-[#000000]/80"
+    >
+      Disclaimer :
+    </div>
+    <div class="flex flex-col space-y-2">
+      <p
+        class="text-[12px] max-w-[260px] md:max-w-[600px] 2xl:max-w-[1600px] 3xl:max-w-[1800px] 3xl:text-[14px] 4xl:text-[24px] font-normal text-[#000000]/80"
+      >
+        1. Pharmingo data is sourced exclusively from official country
+        publications, and its availability depends on these sources.
+      </p>
+      <p
+        class="text-[12px] max-w-[260px] md:max-w-[600px] 2xl:max-w-[1600px] 3xl:max-w-[1800px] 3xl:text-[14px] 4xl:text-[24px] font-normal text-[#000000]/80"
+      >
+        2. There may be a delay between the data being published on the official
+        source and its appearance in Pharmingo due to data collection, quality
+        assurance, and processing, which can vary by country.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Customize Columns Modal -->
+<div
+  *ngIf="isCustomizeColumnsModalOpen"
+  class="fixed inset-0 bg-black/50 px-4 md:px-0 flex items-center justify-center z-50"
+>
+  <div
+    class="bg-white rounded-lg shadow-lg w-[500px] max-h-[600px] 3xl:w-[700px] 3xl:max-h-[700px] overflow-hidden"
+  >
+    <!-- Modal Header -->
+    <div class="px-6 py-4 border-b flex items-center justify-between">
+      <h3
+        class="text-lg font-semibold text-[#000000 text-[16px] 3xl:text-[22px]"
+      >
+        Customize columns
+      </h3>
+      <button
+        class="text-gray-400 hover:text-gray-600 text-[16px] 3xl:text-[22px]"
+        (click)="closeCustomizeColumnsModal()"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="px-6 py-4 overflow-y-auto h-[460px]">
+      <!-- Select All Checkbox -->
+      <div class="flex items-center space-x-3 mb-4 px-2">
+        <input
+          type="checkbox"
+          [(ngModel)]="selectAll"
+          id="selectAll"
+          (change)="toggleSelectAll()"
+          class="accent-[#E76F51] h-[16px] w-[16px] 2xl:h-[20px] 2xl:w-[20px] 3xl:h-[30px] 3xl:w-[30px]"
+        />
+        <label
+          for="selectAll"
+          class="text-[#000000] text-[16px] 3xl:text-[22px]"
+          >Select All</label
+        >
+      </div>
+
+      <!-- Draggable List -->
+      <div cdkDropList class="space-y-2" (cdkDropListDropped)="onDrop($event)">
+        <div
+          *ngFor="
+            let column of this.filterService.getState().filterValues
+              .customizedColumns
+          "
+          cdkDrag
+          class="flex items-center justify-between p-2 border rounded-md"
+        >
+          <div class="flex items-center space-x-3">
+            <input
+              type="checkbox"
+              [(ngModel)]="column.selected"
+              id="{{ column.name }}"
+              (change)="updateSelectAllState()"
+              class="accent-[#E76F51] h-[16px] w-[16px] 2xl:h-[20px] 2xl:w-[20px] 3xl:h-[30px] 3xl:w-[30px]"
+            />
+            <label
+              for="{{ column.name }}"
+              class="text-[#000000] text-[16px] 3xl:text-[22px]"
+            >
+              {{ formatHeader(column.name) }}
+            </label>
+          </div>
+          <span class="text-gray-500 cursor-move">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M4 10h16M4 14h16"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="flex space-x-4 items-center justify-end px-6 py-4 border-t">
+      <button
+        class="px-6 2xl:px-8 py-2 text-[16px] 3xl:text-[22px] font-medium text-black rounded-md border-[1px] border-[#000000]/10"
+        (click)="closeCustomizeColumnsModal()"
+      >
+        Cancel
+      </button>
+      <button
+        class="px-6 2xl:px-8 py-2 text-[16px] 3xl:text-[22px] font-medium text-white bg-[#2A9D8F] rounded-md hover:bg-[#2a9d8f]/90"
+        (click)="applyCustomizeColumns()"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>

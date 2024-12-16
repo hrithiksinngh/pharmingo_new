@@ -1,0 +1,210 @@
+<!-- Section 6 -->
+<section id="datasets" class="w-full h-[2050px] bg-[#264653] font-roboto">
+    <div
+      class="flex flex-col space-y-[50px] max-w-[1440px] mx-auto px-[50px] py-[50px]"
+    >
+      <div class="flex flex-col space-y-[5px]">
+        <div class="text-[36px] text-white font-semibold">
+          Offering Details
+        </div>
+        <div class="h-1 bg-[#E76F51] w-[100px]"></div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="grid grid-cols-6 gap-y-4 max-w-[650px] gap-x-4">
+        <div
+          *ngFor="let tab of offeringsCardData"
+          (click)="selectTab(tab.tabTitle)"
+          [class.active-tab]="selectedTab === tab.tabTitle"
+          [ngClass]="{
+            'col-span-3':
+              tab.tabTitle === 'Regulatory Data' ||
+              tab.tabTitle === 'Dosing Assumptions',
+            'col-span-2':
+              tab.tabTitle !== 'Regulatory Data' &&
+              tab.tabTitle !== 'Dosing Assumptions',
+            'bg-gradient-to-r from-[#E76F51] to-[#F4A261] text-white':
+              selectedTab === tab.tabTitle,
+            'hover:bg-gradient-to-r hover:from-[#E76F51]/50 hover:to-[#F4A261]/50  hover:text-white text-[#F6F6F6]/70':
+              selectedTab !== tab.tabTitle
+          }"
+          class="text-[20px] cursor-pointer font-normal px-[20px] text-[#F6F6F6]/70 rounded-full border-[1px] border-[#F6F6F6]/20 h-[50px] flex items-center justify-center"
+        >
+          {{ tab.tabTitle }}
+        </div>
+      </div>
+
+      <!-- Content Card -->
+      <div
+        id="content-card"
+        class="max-w-[680px] rounded-lg shadow-lg overflow-hidden"
+      >
+        <div class="py-12 bg-green-gradient flex flex-col space-y-[30px]">
+          <div class="flex flex-col px-12">
+            <h2
+              id="content-title"
+              class="text-[36px] font-medium text-white"
+            >
+              {{ selectedContent?.title }}
+            </h2>
+
+            <div class="relative">
+              <div
+                class="absolute top-[30px] h-[280px] w-[550px] bg-[#000000]/20 rotate-[4deg] p-[5px] rounded-[12px]"
+              ></div>
+              <div
+                class="z-10 relative h-[280px] w-[550px] bg-white p-[5px] rounded-[12px] mt-[30px]"
+              >
+                <div
+                  class="  rounded-[9px] w-full h-full"
+                  style="background-image: url('../../assets/{{selectedContent?.featureImage}}'); background-size: cover;"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col space-y-[20px] mt-[80px]">
+            <div class="flex flex-col space-y-[25px] px-12">
+              <p class="text-[24px] font-semibold text-white">
+                {{ selectedContent?.heading }}
+              </p>
+              <p class="text-[15px] font-normal text-white/80">
+                {{ selectedContent?.description }}
+              </p>
+            </div>
+            <!-- Add loop here  -->
+            <div class="flex flex-col space-y-[30px]">
+              <div
+                *ngFor="let point of selectedContent?.points"
+                class="flex items-start justify-start space-x-4 px-12"
+              >
+                <div class="w-[20px] rounded-full z-20">
+                  <img
+                    src="../../assets/white_check_icon.svg"
+                    alt="Check Icon"
+                    class="w-full h-full bg-cover mt-1"
+                  />
+                </div>
+
+                <div
+                  class="text-[18px] font-normal text-[#ffffff]/80 max-w-[500px]"
+                >
+                  {{ point.describe }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Features details with icon  -->
+
+        <div
+          class="flex flex-col w-full space-y-[20px] bg-white py-10 px-10"
+        >
+          <div class="grid grid-cols-3 w-full gap-x-4">
+            <div
+              *ngFor="let feature of selectedContent?.features"
+              class="flex flex-col items-center space-y-4"
+            >
+              <div class="w-[100px] rounded-full">
+                <img
+                  src="../../assets/{{ feature.image }}"
+                  alt="{{feature.title}}"
+                  class="w-full h-full bg-cover mt-1"
+                />
+              </div>
+              <div class="flex flex-col items-center space-y-2">
+                <div
+                  class="text-[15px] text-center font-semibold text-[#000000]/90"
+                >
+                  {{ feature.title }}
+                </div>
+                <div
+                  class="text-[12px] text-center font-normal text-[#000000]/80"
+                >
+                  {{ feature.description }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col">
+            <div class="flex items-center justify-between">
+              <p class="text-[20px] font-semibold text-[#000000]/90">
+                Data access points
+              </p>
+
+              <span
+                (click)="handleViewDetails(selectedContent?.tabTitle)"
+                class="text-[16px] font-normal text-[#0F65B5D9] cursor-pointer"
+                >View details</span
+              >
+            </div>
+
+            <div class="flex flex-wrap gap-x-3 gap-y-[10px] mt-[20px]">
+              <div
+                *ngFor="let col of selectedContent?.dataAccessPoints"
+                class="flex items-center justify-center h-[40px] px-[15px] text-[14px] font-normal text-[#000000] border-[1px] border-[#000000]/10 rounded-[10px]"
+                [ngClass]="{
+                  'border-[#E76F51]/40 bg-[#fef8f6]':
+                    col.isSpecific === true,
+                  'border-[#000000]/10 bg-transparent':
+                    col.isSpecific === false
+                }"
+              >
+                {{ col.name }}
+              </div>
+            </div>
+
+            <div class="flex space-x-[10px] mt-[20px]">
+              <div
+                class="block bg-[#fef8f6] h-[20px] w-[40px] border-[1px] border-[#E76F51]/40 rounded-[4px]"
+              ></div>
+              <div class="flex text-[14px] font-normal text-[#000000]/60">
+                *{{ selectedContent?.tabTitle }} Specific access points
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- View Details Modal  -->
+<div
+  class="z-30 fixed inset-0 bg-gray-700 bg-opacity-75 flex justify-center items-center"
+  *ngIf="isViewDetailModalOpen"
+>
+  <div class="bg-white rounded-lg shadow-lg max-w-4xl max-h-[600px] w-full p-6">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold">{{selectedTopicDetails?.title}} access points</h2>
+
+      <lucide-icon
+        (click)="closeViewDetailModal()"
+        [img]="XIcon"
+        class="h-6 w-6 cursor-pointer text-black"
+      ></lucide-icon>
+    </div>
+
+    <!-- Table for Topic Details -->
+    <div
+      class="flex flex-col h-[500px] overflow-y-scroll custom-scroll rounded-lg border-[1px] border-t-none border-[#000000]/10"
+    >
+      <table class="w-full bg-white rounded-lg shadow-md">
+        <thead>
+          <tr
+            class="sticky top-0 bg-[#264653] text-white text-left text-sm font-semibold"
+          >
+            <th class="text-left p-4 border-b font-medium w-[250px]">Field</th>
+            <th class="text-left p-4 border-b font-medium">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let detail of selectedTopicDetails?.details">
+            <td class="p-4 border-b">{{ detail.field }}</td>
+            <td class="p-4 border-b">{{ detail.field_description }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

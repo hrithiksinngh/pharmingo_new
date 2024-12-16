@@ -1,0 +1,83 @@
+<!-- Footer  -->
+
+<footer class="bg-blue-gradient h-[460px] text-white py-8 px-4">
+    <div class="max-w-[1200px] mx-auto pt-[50px]">
+      <div
+        class="container mx-auto flex flex-col md:flex-row justify-between items-center md:items-start space-y-6 md:space-y-0"
+      >
+        <div class="flex flex-col items-center md:items-start space-y-8">
+          <div class="flex items-center">
+            <img
+              src="../../assets/ph_logo_white.svg"
+              alt="Pharmingo Logo"
+              class="h-[56px] mr-3"
+            />
+          </div>
+          <p
+            class="text-[18px] text-white/60 font-normal text-center md:text-left max-w-[330px]"
+          >
+            Providing customized data reports and more for market access & pricing
+          </p>
+  
+          <a
+            routerLink="/signup"
+            class="cursor-pointer text-[18px] h-[55px] w-[230px] flex items-center justify-center font-medium font-roboto rounded-[8px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+          >
+            Sign Up for Free
+          </a>
+        </div>
+  
+        <div
+          class="flex flex-col items-center md:items-start space-y-6 max-w-[300px]"
+        >
+          <h3 class="text-[26px] text-white font-semibold">Quick Links</h3>
+          <ul class="text-sm space-y-4">
+            <li *ngFor="let link of links">
+              <a
+                [href]="link.url"
+                class="text-[18px] text-white/60 font-normal"
+                >{{ link.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+  
+        <div
+          class="flex flex-col items-center md:items-start space-y-6 max-w-[300px]"
+        >
+          <h3 class="text-[26px] text-white font-semibold">Contact Us</h3>
+          <div class="flex flex-col space-y-2.5">
+            <p class="text-[18px] text-white/60 font-normal">
+              {{ contactInfo.address }}
+            </p>
+            <p class="text-[18px] text-white/60 font-normal">
+              <a
+                href="mailto:{{ contactInfo.email }}"
+                class="hover:text-gray-300"
+                >{{ contactInfo.email }}</a
+              >
+            </p>
+            
+            <div class="flex space-x-4 mt-2">
+              <a
+                *ngFor="let social of socialMedia"
+                [href]="social.url"
+                class="text-white h-[40px] w-[40px] cursor-pointer"
+              >
+                <img
+                  src="../../assets/{{ social.icon }}.svg"
+                  alt="{{ social.icon }}"
+                  class="h-[30px] w-[30px] mr-3"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="text-center text-[16px] font-normal mt-20 text-[#ffffff]/60">
+        © 2024 Global Pricing Innovations Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+  

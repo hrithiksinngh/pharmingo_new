@@ -1,0 +1,196 @@
+<div
+  class="w-full flex flex-col bg-[#264653] items-center min-h-screen font-roboto"
+>
+  <div
+    class="w-full fixed top-0 z-50 h-[70px] bg-[#264653] shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)]"
+  >
+    <div
+      class="flex items-center justify-between max-w-[1440px] px-[100px] mx-auto py-3"
+    >
+      <div class="flex items-center">
+        <img
+          src="../../assets/ph_logo_white.svg"
+          alt="pharmingo Logo"
+          class="h-[35px]"
+        />
+      </div>
+      <div class="flex items-center space-x-8">
+        <div
+          class="group relative text-white/80 text-[16px] cursor-pointer font-medium"
+        >
+          Datasets
+
+          <div
+            class="absolute hidden group-hover:flex top-[25px] right-0 flex-col justify-between overflow-hidden w-[300px] bg-white h-[280px] rounded-[3px]"
+          >
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Pricing
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Market Access
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Treatment Cost
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Dosing Assumptions
+            </div>
+            <div
+              (click)="scrollToFragment('datasets')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Regulatory Approvals
+            </div>
+            
+          </div>
+        </div>
+        <div
+          class="group relative text-white/80 text-[16px] cursor-pointer font-medium"
+        >
+          Packages
+
+          <div
+            class="absolute hidden group-hover:flex top-[25px] flex-col justify-between overflow-hidden right-0 w-[300px] bg-white h-[240px] rounded-[3px]"
+          >
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Basic Access
+            </div>
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Enhanced Access
+            </div>
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Custom Report
+            </div>
+            <div
+              (click)="scrollToFragment('packages')"
+              class="flex items-center text-[14px] px-5 py-4 font-medium text-black border-l-4 border-transparent hover:border-[#f3a261] hover:bg-[#f3a261]/10 transition duration-50 ease-in"
+            >
+              Consultation
+            </div>
+          </div>
+        </div>
+
+        <a
+          routerLink="/login"
+          class="cursor-pointer text-white text-[18px] h-[35px] w-[110px] flex items-center justify-center font-medium font-roboto rounded-[6px] bg-gradient-to-tr from-[#E76F51] to-[#F4A261]"
+        >
+          Login
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="flex items-center justify-between mt-[70px] w-full bg-[#264653] h-[250px]"
+  >
+    <div
+      class="flex flex-col space-y-[20px] max-w-[1440px] mx-auto px-[100px] 3xl:px-[50px] w-full"
+    >
+      <div class="text-white font-bold text-[72px] leading-[58px]">
+        Privacy Policy
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col bg-white w-full">
+    <section id="privacy-content" class="bg-white relative overflow-hidden">
+      <div
+        class="max-w-[1440px] mx-auto px-[100px] pt-[60px] 3xl:px-[50px] w-full pb-20"
+      >
+        <div class="flex flex-col">
+          <h2 class="text-[40px] leading-[58px] font-bold text-[#000000] mb-5">
+            Introduction
+          </h2>
+          <div class="text-[16px] md:text-[20px] text-[#020617]/80">
+            pharmingo, a Global Pricing Innovations Ltd brand, is committed to
+            protecting your privacy. This Privacy Policy explains how we
+            collect, use, and protect your personal information when you access
+            our website or use our services, including the purchase and download
+            of customized data reports.
+          </div>
+        </div>
+        <div
+          *ngFor="let section of privacyPolicyDetails; let i = index"
+          class="w-full mt-[50px]"
+        >
+          <div class="flex flex-col space-y-[8px]">
+            <div
+              class="text-[30px] leading-[42px] font-bold text-[#000000] mb-5"
+            >
+              {{ section.title }}
+            </div>
+            <div *ngIf="section.items" class="max-w-[1280px]">
+              <ul
+                *ngFor="let item of section.items; let idx = index"
+                class="list-disc pl-[60px] space-y-2 text-[16px] md:text-[20px] text-[#020617]/80"
+              >
+                <li class="text-[#020617]/60">
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="section.description" class="max-w-[1280px]">
+              <div
+                class="pl-[40px] text-[16px] md:text-[20px] text-[#020617]/60"
+              >
+                {{ section.description }}
+                <span *ngIf="section.title ==='4. Your Rights and Choices'"><a
+                  href="mailto:support@pharmingo.com"
+                  class="text-blue-500"
+                  >support&#64;pharmingo.com</a>.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-full mt-[50px]">
+          <div class="flex flex-col space-y-[8px]">
+            <div
+              class="text-[30px] leading-[42px] font-bold text-[#000000] mb-5"
+            >
+              11. Contact Us
+            </div>
+
+            <div class="max-w-[1280px]">
+              <div
+                class="pl-[40px] text-[16px] md:text-[20px] text-[#020617]/60"
+              >
+                If you have any questions or concerns about this Privacy Policy
+                or how we handle your data, please contact us at
+                <a
+                  href="mailto:support@pharmingo.com"
+                  class="text-blue-500"
+                  >support&#64;pharmingo.com</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="flex flex-col w-full">
+    <app-footer></app-footer>
+  </div>
+</div>

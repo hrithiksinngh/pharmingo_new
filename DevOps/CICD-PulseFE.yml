@@ -1,0 +1,442 @@
+## Run - "npm install", "npm audit fix --force", "ng lint --fix", "ng build --prod" if errors come we have fix before pushing
+trigger:
+- develop
+- master
+
+pr:
+  autoCancel: true
+
+variables:
+- group: 'CICD-ChatGpiFE'
+
+stages:
+## Start our first step to install the .net core sdk to build our project ##
+- stage: 'Build'
+  displayName: 'Build the web application'
+  jobs:
+  - job: 'Build'
+    displayName: 'Build job'
+    pool:
+      name: LinuxPool
+    workspace:
+      clean: all
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '18.19.0' # or '18.19.0' to be specific
+
+    - task: Npm@1
+      displayName: 'Install dependencies for FE project'
+      inputs:
+        command: ci
+        verbose: false
+
+################################ Dev Env - For all branches ##############################################
+    # - task: 4tecture.Tokenizer.Tokenizer.Tokenizer@0
+    #   displayName: 'Tokenizer - Replace Config files of $(buildConfigurationDev)'
+    #   inputs:
+    #     sourceFilesPattern: 'projects/helios-gui/src/environments/environment.$(buildConfigurationDev).ts'
+    #     tokenIdentifierRegex: '(__)([a-zA-Z0-9\.\-:_]*)(__)'
+
+    ## Build Angular Project - Dev/QA/Prod
+    - task: Npm@1
+      displayName: 'Build Project - $(buildConfigurationDev) Env'
+      inputs:
+        command: custom
+        verbose: false
+        customCommand: 'run build-dev '
+
+    # Build and Push Image  
+    - task: Docker@2
+      displayName: Build and push an image to ACR
+      condition: always ()
+      inputs:
+        command: buildAndPush
+        repository: clmfe
+        dockerfile: $(Build.SourcesDirectory)/DevOps/Dockerfile
+        containerRegistry: $(acrSC)
+        buildContext: '$(Build.SourcesDirectory)/dist/pharmingo'
+        tags: |
+          Development-$(tag)
+
+######################## QA Env - Only for release, devQAReleaseBranchName branches #######################
+    # # - task: 4tecture.Tokenizer.Tokenizer.Tokenizer@0
+    # #   displayName: 'Tokenizer - Replace Config files of $(buildConfigurationQA)'
+    #   condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['devQAReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')))
+    #   inputs:
+    #     sourceFilesPattern: 'projects/helios-gui/src/environments/environment.$(buildConfigurationQA).ts'
+    #     tokenIdentifierRegex: '(__)([a-zA-Z0-9\.\-:_]*)(__)'
+
+    # - task: Npm@1
+    #   displayName: 'Build Angular Project'
+    #   condition: and(succeeded(), or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['devQAReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')))
+    #   inputs:
+    #     command: custom
+    #     customCommand: 'run build --configuration=production'
+    #     verbose: false
+
+    # # Build and Push Docker Image
+    # - task: Docker@2
+    #   displayName: 'Build and Push Image to ACR'
+    #   condition: and(succeeded(), or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['devQAReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')))
+    #   inputs:
+    #     command: buildAndPush
+    #     repository: $(imageRepository)
+    #     dockerfile: $(Build.SourcesDirectory)/DevOps/Dockerfile
+    #     containerRegistry: $(acrSC)
+    #     buildContext: '$(Build.SourcesDirectory)/dist/pharmingo'
+    #     tags: |
+    #       QA-$(Build.BuildId)
+        
+############### Datastage - Only for release, devQAReleaseBranchName, prodReleaseBranchName branches ###### 
+#     - task: 4tecture.Tokenizer.Tokenizer.Tokenizer@0
+#       displayName: 'Tokenizer - Replace Config files of $(buildConfigurationdatastage)'
+#       condition: and(succeeded(), or(or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['datastageReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#       inputs:
+#         sourceFilesPattern: 'projects/helios-gui/src/environments/environment.$(buildConfigurationdatastage).ts'
+#         tokenIdentifierRegex: '(__)([a-zA-Z0-9\.\-:_]*)(__)'
+
+#     ## Build Angular Project - Dev/QA/Prod
+#     - task: Npm@1
+#       displayName: 'Build Project - $(buildConfigurationdatastage) Env'
+#       condition: and(succeeded(), or(or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['datastageReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#       inputs:
+#         command: custom
+#         verbose: false
+#         customCommand: 'run build-$(buildConfigurationdatastage)'
+
+#     # Build and Push Image  
+#     - task: Docker@2
+#       displayName: Build and push an image to ACR
+#       condition: and(succeeded(), or(or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['datastageReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#       inputs:
+#         command: buildAndPush
+#         repository: $(imageRepository)
+#         dockerfile: $(Build.SourcesDirectory)/DevOps/Dockerfile
+#         containerRegistry: $(acrSC)
+#         buildContext: '$(Build.SourcesDirectory)/dist/helios-gui-$(buildConfigurationdatastage)'
+#         tags: |
+#           datastage-$(tag)
+
+# ######################## Staging - Only for staging ReleaseBranchName ######################################
+#     - task: 4tecture.Tokenizer.Tokenizer.Tokenizer@0
+#       displayName: 'Tokenizer - Replace Config files of $(buildConfigurationStaging)'
+#       condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#       inputs:
+#         sourceFilesPattern: 'projects/helios-gui/src/environments/environment.$(buildConfigurationStaging).ts'
+#         tokenIdentifierRegex: '(__)([a-zA-Z0-9\.\-:_]*)(__)'
+
+#     ## Build Angular Project - Dev/QA/Prod
+#     - task: Npm@1
+#       displayName: 'Build Project - $(buildConfigurationStaging) Env'
+#       condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#       inputs:
+#         command: custom
+#         verbose: false
+#         customCommand: 'run build-$(buildConfigurationStaging)'
+
+#     # Build and Push Image  
+#     - task: Docker@2
+#       displayName: Build and push an image to ACR
+#       condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#       inputs:
+#         command: buildAndPush
+#         repository: $(imageRepository)
+#         dockerfile: $(Build.SourcesDirectory)/DevOps/Dockerfile
+#         containerRegistry: $(acrSC)
+#         buildContext: '$(Build.SourcesDirectory)/dist/helios-gui-$(buildConfigurationStaging)'
+#         tags: |
+#           Staging-$(tag)
+
+######################## Prod - Only for prodReleaseBranchName ############################################
+    # - task: 4tecture.Tokenizer.Tokenizer.Tokenizer@0
+    #   displayName: 'Tokenizer - Replace Config files of $(buildConfigurationProd)'
+    #   condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+    #   inputs:
+    #     sourceFilesPattern: 'projects/helios-gui/src/environments/environment.$(buildConfigurationProd).ts'
+    #     tokenIdentifierRegex: '(__)([a-zA-Z0-9\.\-:_]*)(__)'
+
+    ## Build Angular Project - Dev/QA/Prod
+    - task: Npm@1
+      displayName: 'Build Project - $(buildConfigurationProd) Env'
+      condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+      inputs:
+        command: custom
+        verbose: false
+        customCommand: 'run build-prod'
+
+    # Build and Push Image  
+    - task: Docker@2
+      displayName: Build and push an image to ACR
+      condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+      inputs:
+        command: buildAndPush
+        repository: clmfe
+        dockerfile: $(Build.SourcesDirectory)/DevOps/Dockerfile
+        containerRegistry: $(acrSC)
+        buildContext: '$(Build.SourcesDirectory)/dist/pharmingo'
+        tags: |
+          Production-$(tag)
+
+#########################################################################################################
+
+    ## White Source bolt - To audit and identify any vulnerability ##
+    # - task: 'WhiteSource@21'
+    #   displayName: 'WhiteSource Bolt for code audit'
+    #   condition: and(succeeded(), and(eq(variables['testRun'], 'true'), eq(variables['Build.Reason'], 'PullRequest')))
+    #   timeoutInMinutes: 5
+
+    # # Check NPM Vulnerabilities like private packages / npm audit --parseable
+    # - task: Npm@1
+    #   displayName: 'NPM Audit Check'
+    #   continueOnError: true
+    #   condition: and(succeeded(), and(eq(variables['testRun'], 'true'), eq(variables['Build.Reason'], 'PullRequest')))
+    #   inputs:
+    #     command: custom
+    #     verbose: false
+    #     customCommand: 'run ci:audit'
+
+    # # Do lint test to find if proper conding standards are followed
+    # - task: Npm@1
+    #   displayName: 'Run Lint test - Code Analysis'
+    #   condition: and(succeeded(), and(eq(variables['testRun'], 'true'), eq(variables['Build.Reason'], 'PullRequest')))
+    #   continueOnError: true
+    #   inputs:
+    #     command: custom
+    #     verbose: false
+    #     customCommand: 'run ci:lint'
+
+    # # Run Unit tests and code coverage will be generated in this
+    # - task: Npm@1
+    #   displayName: 'Run Unit test'
+    #   condition: and(succeeded(), and(eq(variables['testRun'], 'true'), eq(variables['Build.Reason'], 'PullRequest')))
+    #   continueOnError: true
+    #   inputs:
+    #     command: custom
+    #     verbose: false
+    #     customCommand: 'run ci:test'
+
+    # # Publish unit test results
+    # - task: PublishTestResults@2
+    #   displayName: 'Publish Unit Test Results'
+    #   condition: and(succeeded(), and(eq(variables['testRun'], 'true'), eq(variables['Build.Reason'], 'PullRequest')))
+    #   inputs:
+    #     testResultsFormat: 'JUnit'
+    #     testResultsFiles: '**/tests-*.xml'
+    #     testRunTitle: 'Unit tests'
+
+    # ## Publish lint test results
+    # - task: PublishTestResults@2
+    #   displayName: 'Publish results from linter'
+    #   condition: and(succeeded(), and(eq(variables['testRun'], 'true'), eq(variables['Build.Reason'], 'PullRequest')))
+    #   inputs:
+    #     testResultsFormat: 'JUnit'
+    #     testResultsFiles: '**/linter-*.xml'
+    #     testRunTitle: 'Code linter'
+
+    # Publish Code Coverage report
+    # - task: PublishCodeCoverageResults@1
+    #   displayName: 'Publish Code Coverage test results'
+    #   condition: and(succeeded(), and(eq(variables['testRun'], 'true'), eq(variables['Build.Reason'], 'PullRequest')))
+    #   inputs:
+    #     codeCoverageTool: 'Cobertura'
+    #     summaryFileLocation: '**/*cobertura.xml'
+
+# Deployment section starts to deploy to dev environment when merging with develop branch ##
+- stage: 'Development'
+  displayName: 'Deploy - Dev Environment'
+  dependsOn: Build
+  condition: always ()
+  jobs:
+  - deployment: deploy
+    displayName: 'Deploy - Dev Env'
+    timeoutInMinutes: 10
+    pool:
+      name: LinuxPool
+    environment: Development
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+
+          - checkout: self
+            displayName: 'Checkout current repository'
+
+          - task: Kubernetes@1
+            displayName: 'Login to Dev K8s Cluster'
+            inputs:
+              connectionType: 'Azure Resource Manager'
+              azureSubscriptionEndpoint: $(resourceManagerConnectionName)
+              azureResourceGroup: rg-gpi-pulse
+              kubernetesCluster: pulse-dev-aks
+              command: login
+              useClusterAdmin: true
+
+          - task: Bash@3
+            displayName: 'Deploy - Dev Env'
+            inputs:
+              targetType: inline
+              failOnStderr: true
+              workingDirectory: $(Build.SourcesDirectory)/DevOps
+              script: |
+                sed -i 's/__containerTag__/Development-$(tag)/g' deployment.yml
+                sed -i 's/__deployEnv__/development/g' deployment.yml
+                kubectl config use-context pulse-dev-aks
+                kubectl apply -f deployment.yml
+
+# - stage: 'qa'
+#   displayName: 'Deploy - QA Environment'
+#   dependsOn: Build
+#   condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['devQAReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')))
+#   jobs:
+#   - deployment: deploy
+#     displayName: 'Deploy - QA Env'
+#     timeoutInMinutes: 10
+#     pool:
+#       name: LinuxPool
+#     environment: qa
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - checkout: self
+
+#           - task: Kubernetes@1
+#             displayName: 'Login to Dev K8s Cluster'
+#             inputs:
+#               connectionType: 'Azure Resource Manager'
+#               azureSubscriptionEndpoint: $(resourceManagerConnectionName)
+#               azureResourceGroup: rg-gpi-pulse
+#               kubernetesCluster: pulse-dev-aks
+#               command: login
+#               useClusterAdmin: true
+
+#           - task: Bash@3
+#             displayName: 'Deploy - QA Env'
+#             inputs:
+#               targetType: inline
+#               failOnStderr: true
+#               workingDirectory: $(Build.SourcesDirectory)/DevOps
+#               script: |
+#                 sed -i 's/__containerTag__/QA-$(tag)/g' deployment.yml
+#                 sed -i 's/__deployEnv__/qa/g' deployment.yml
+#                 kubectl config use-context pulse-dev-aks
+#                 kubectl apply -f deployment.yml
+
+# - stage: 'datastage'
+#   displayName: 'Deploy - Datastage Environment'
+#   dependsOn: Build
+#   condition: and(succeeded(), or(or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['datastageReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/develop')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#   jobs:
+#   - deployment: deploy
+#     displayName: 'Deploy - DataStage Env'
+#     timeoutInMinutes: 10
+#     pool:
+#       name: LinuxPool
+#     environment: datastage
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - checkout: self
+
+#           - task: Kubernetes@1
+#             displayName: 'Login to Datastage K8s Cluster'
+#             inputs:
+#               connectionType: 'Azure Resource Manager'
+#               azureSubscriptionEndpoint: $(resourceManagerConnectionName)
+#               azureResourceGroup: rg-gpi-pulse
+#               kubernetesCluster: pulse-datastage-aks
+#               command: login
+#               useClusterAdmin: true
+
+#           - task: Bash@3
+#             displayName: 'Deploy - Datastage Env'
+#             inputs:
+#               targetType: inline
+#               failOnStderr: true
+#               workingDirectory: $(Build.SourcesDirectory)/DevOps
+#               script: |
+#                 sed -i 's/__containerTag__/datastage-$(tag)/g' deployment.yml
+#                 sed -i 's/__deployEnv__/datastage/g' deployment.yml
+#                 kubectl config use-context pulse-datastage-aks
+#                 kubectl apply -f deployment.yml
+
+# - stage: 'Staging'
+#   displayName: 'Deploy - Staging Environment'
+#   dependsOn: Build
+#   condition: and(succeeded(), or(or(or(startswith(variables['Build.SourceBranch'], 'refs/heads/release'), startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName'])), startswith(variables['Build.SourceBranch'], 'refs/heads/sprint')), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+#   jobs:
+#   - deployment: deploy
+#     displayName: 'Deploy - Staging Env'
+#     timeoutInMinutes: 10
+#     pool:
+#       name: LinuxPool
+#     environment: Staging
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           - checkout: self
+
+#           - task: Kubernetes@1
+#             displayName: 'Login to Prod K8s Cluster'
+#             inputs:
+#               connectionType: 'Azure Resource Manager'
+#               azureSubscriptionEndpoint: $(resourceManagerConnectionName)
+#               azureResourceGroup: rg-gpi-pulse
+#               kubernetesCluster: pulse-prod-aks
+#               command: login
+#               useClusterAdmin: true
+
+#           - task: Bash@3
+#             displayName: 'Deploy - Staging Env'
+#             inputs:
+#               targetType: inline
+#               failOnStderr: true
+#               workingDirectory: $(Build.SourcesDirectory)/DevOps
+#               script: |
+#                 sed -i 's/__containerTag__/Staging-$(tag)/g' deployment.yml
+#                 sed -i 's/__deployEnv__/staging/g' deployment.yml
+#                 kubectl config use-context pulse-prod-aks
+#                 kubectl apply -f deployment.yml
+
+- stage: 'Production'
+  displayName: 'Deploy - Production Environment'
+  dependsOn: Build
+  condition: and(succeeded(), or(startswith(variables['Build.SourceBranch'], variables['stagingProdReleaseBranchName']), startswith(variables['Build.SourceBranch'], 'refs/heads/master')))
+  jobs:
+  - deployment: deploy
+    displayName: 'Deploy - Production Env'
+    timeoutInMinutes: 10
+    pool:
+      name: LinuxPool
+    environment: Production
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+
+          - task: Kubernetes@1
+            displayName: 'Login to Prod K8s Cluster'
+            inputs:
+              connectionType: 'Azure Resource Manager'
+              azureSubscriptionEndpoint: $(resourceManagerConnectionName)
+              azureResourceGroup: rg-gpi-pulse
+              kubernetesCluster: pulse-prod-aks
+              command: login
+              useClusterAdmin: true
+
+          - task: Bash@3
+            displayName: 'Deploy - Prod Env'
+            inputs:
+              targetType: inline
+              failOnStderr: true
+              workingDirectory: $(Build.SourcesDirectory)/DevOps
+              script: |
+                sed -i 's/__containerTag__/Production-$(tag)/g' deployment.yml
+                sed -i 's/__deployEnv__/production/g' deployment.yml
+                kubectl config use-context pulse-prod-aks
+                kubectl apply -f deployment.yml

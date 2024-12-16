@@ -1,0 +1,29 @@
+<div class="font-roboto flex flex-col items-center justify-center min-h-screen">
+  <div
+    class="w-[350px] md:w-[550px] lg:w-[650px] mx-auto flex flex-col items-center  px-6 py-8 md:px-12 lg:px-24 lg:py-12 bg-white border-[1px] border-[#000000]/5 rounded-xl shadow-lg"
+  >
+    <div
+      class="rounded-full h-[60px] w-[60px] flex items-center justify-center mb-6"
+    >
+      <img src="../../assets/check_icon.svg" alt="Login Icon" class="h-[50px] w-[50px]" />
+    </div>
+    <div
+      class="text-[22px] md:text-[26px] lg:text-[30px] text-[#000000]/85 font-roboto font-medium text-center"
+    >
+      {{ packageName }} package selected!
+    </div>
+
+    <p class="mt-4 max-w-[480px] text-center text-[14px] md:text-[16px] text-[#000000]/45">
+      Thank you for selecting the {{ packageName }} package! Our expert will
+      reach out to you shortly to schedule a convenient time for your
+      consultation. Please keep an eye on your email for further details.
+    </p>
+
+    <button
+      (click)="handleExploreMore()"
+      class="mt-10 w-[250px] bg-[#2A9D8F] text-white font-normal py-3 rounded-lg hover:bg-[#2A9D8F]/90 transition duration-300"
+    >
+      Explore More packages
+    </button>
+  </div>
+</div>

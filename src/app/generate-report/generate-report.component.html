@@ -1,0 +1,613 @@
+<!-- Navbar (reuse from the previous component) -->
+<div
+  class="font-roboto fixed z-50 top-0 md:z-0 md:relative flex items-center justify-between h-[60px] px-4 md:py-4 md:px-10 xl:py-4 xl:px-10 bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.1)] md:shadow-[0px_4px_8px_0px_rgba(0,0,0,0.06)] w-full"
+>
+  <div class="flex items-center">
+    <img
+      src="../../assets/ph_logo_dark.svg"
+      alt="Pharmingo Logo"
+      class="h-6 md:h-8 mr-3"
+    />
+  </div>
+
+  <div class="flex items-center space-x-4 md:space-x-8">
+    <div
+      routerLink="/purchase-history"
+      class="text-black/80 text-[14px] md:text-[16px] 3xl:text-[22px] cursor-pointer font-medium"
+    >
+      Dashboard
+    </div>
+    <div
+      class="flex items-center relative text-black/80 text-[14px] md:text-[16px] group"
+    >
+      <span>Help</span>
+      <lucide-icon
+        [img]="HelpCircleIcon"
+        class="h-3 w-3 md:w-4 md:h-4 ml-[1px] text-[#252525]"
+        strokeWidth="2"
+      >
+      </lucide-icon>
+
+      <div
+        class="tooltip absolute -right-[110px] md:-right-[160px] top-8 w-[300px] md:w-[520px] bg-white text-black/80 px-4 py-2 rounded-[4px] shadow-2xl font-medium text-[13px] leading-[22px] hidden group-hover:block"
+      >
+        For assistance, please reach out to our support team at
+        <a href="mailto:support@pharmingo.com" class="text-black"
+          >support&#64;pharmingo.com</a
+        >
+      </div>
+    </div>
+
+    <button
+      (click)="signOut()"
+      title="Logout"
+      class="flex md:hidden text-black/80 text-[14px] border-black/80 bg-zinc-300 p-1 rounded-[6px]"
+    >
+      <lucide-icon
+        [img]="LogOutIcon"
+        class="h-5 w-5 text-[#252525]"
+        strokeWidth="2"
+      >
+      </lucide-icon>
+    </button>
+
+    <button
+      (click)="signOut()"
+      title="Logout"
+      class="hidden md:flex text-black/80 text-[14px] md:text-[16px] border border-black/80 px-3 py-[4px] md:px-6 md:py-[6px] rounded-[6px]"
+    >
+      Logout
+    </button>
+  </div>
+</div>
+
+<!-- Steps Indicator -->
+
+<div class="font-roboto hidden md:block relative w-full">
+  <div
+    class="absolute -top-[2px] left-[30px] lg:left-[40px] xl:left-[100px] xl:top-[0px]"
+    [ngClass]="{
+      hidden: currentStep() === 0 || currentStep() === 4 || currentStep() === 5
+    }"
+  >
+    <lucide-icon
+      (click)="previousStep()"
+      [img]="ChevronLeftIcon"
+      class="cursor-pointer h-[35px] w-[35px] 3xl:h-[45px] 3xl:w-[45px] hover:bg-[#000000]/10 rounded-lg text-black/50"
+    ></lucide-icon>
+  </div>
+  <div
+    class="flex items-center justify-center w-full max-w-2xl lg:max-w-4xl 3xl:max-w-6xl mx-auto mb-8 md:mt-16 xl:mb-1 xl:mt-6 3xl:mt-12"
+  >
+    <!-- Step Items -->
+    <div class="flex items-center w-full mx-auto">
+      <div
+        *ngFor="let step of steps; let i = index"
+        class="relative flex items-start w-full"
+      >
+        <!-- Step Dot -->
+        <div class="flex flex-col items-center justify-center w-full">
+          <div
+            class="z-20 relative flex items-center justify-center text-[14px] w-6 h-6 rounded-full transition-all duration-500 ease-in-out"
+            [ngClass]="{
+              'bg-[#2A9D8F] text-white': i < currentStep(),
+              'bg-gray-50 border border-[#000000]/30 text-black/30 font-medium':
+                i >= currentStep()
+            }"
+          >
+            {{ i + 1 }}
+          </div>
+          <!-- Step Label -->
+          <span
+            class="z-20 mt-2 text-[14px] 2xl:text-[16px] 3xl:text-[22px] font-medium transition-all duration-500 ease-in-out"
+            [ngClass]="{
+              'text-black font-semibold': i === currentStep(),
+              'text-[#000000]/30': i !== currentStep()
+            }"
+          >
+            {{ step }}
+          </span>
+        </div>
+
+        <!-- Step Line -->
+        <div
+          *ngIf="i < steps.length - 1"
+          class="z-10 absolute h-[3px] top-[10px] left-[80px] w-[120px] lg:top-[10px] lg:left-[100px] lg:w-[160px] 3xl:left-[110px] 3xl:w-[225px] transition-all duration-500 ease-in-out"
+          [ngClass]="{
+            'bg-[#2A9D8F]': i < currentStep(),
+            'bg-[#000000]/10': i >= currentStep()
+          }"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Steps Indicator for Mobile and Tablet View -->
+
+<div
+  class="font-roboto sticky z-20 top-[55px] flex items-center justify-center h-[60px] bg-white md:hidden md:relative w-full"
+>
+  <div class="relative flex items-center justify-center w-full max-w-[300px]">
+    <div
+      class="absolute -left-[20px] top-[0px] md:left-[100px] md:top-[0px]"
+      [ngClass]="{
+        hidden:
+          currentStep() === 0 || currentStep() === 4 || currentStep() === 5
+      }"
+    >
+      <lucide-icon
+        (click)="previousStep()"
+        [img]="ChevronLeftIcon"
+        class="cursor-pointer h-[25px] w-[25px] md:h-[35px] md:w-[35px] 3xl:h-[45px] 3xl:w-[45px] hover:bg-[#000000]/10 rounded-lg text-black/50"
+      ></lucide-icon>
+    </div>
+    <!-- Step Items -->
+    <div class="flex items-center w-full mx-auto">
+      <div
+        *ngFor="let step of steps; let i = index"
+        class="relative flex items-start w-full"
+      >
+        <!-- Step Dot -->
+        <div class="flex flex-col items-center justify-center w-full">
+          <div
+            class="z-20 relative flex items-center justify-center text-[14px] w-6 h-6 rounded-full transition-all duration-500 ease-in-out"
+            [ngClass]="{
+              'bg-[#2A9D8F] text-white': i < currentStep(),
+              'bg-gray-50 border border-[#000000]/30 text-black/30 font-medium':
+                i >= currentStep()
+            }"
+          >
+            {{ i + 1 }}
+          </div>
+          <!-- Step Label -->
+          <span
+            class="z-20 mt-2 hidden md:flex md:text-[14px] 2xl:text-[16px] 3xl:text-[22px] font-medium transition-all duration-500 ease-in-out"
+            [ngClass]="{
+              'text-black font-semibold': i === currentStep(),
+              'text-[#000000]/30': i !== currentStep()
+            }"
+          >
+            {{ step }}
+          </span>
+        </div>
+
+        <!-- Step Line -->
+        <div
+          *ngIf="i < steps.length - 1"
+          class="z-10 absolute w-[50px] left-[30px] top-[10px] md:w-[90px] lg:w-[150px] lg:top-[10px] lg:left-[100px] h-[3px] transition-all duration-500 ease-in-out"
+          [ngClass]="{
+            'bg-[#2A9D8F]': i < currentStep(),
+            'bg-[#000000]/10': i >= currentStep()
+          }"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="font-roboto mt-[30px] xl:mt-0">
+  <!-- Step Components -->
+  <div *ngIf="currentStep() === 0">
+    <app-select-topic
+      [topics_1]="topics_1"
+      [topics_2]="topics_2"
+      (topicSelected)="selectTopic($event)"
+      (navigateToPricing)="navigateToPricing()"
+    ></app-select-topic>
+  </div>
+
+  <div *ngIf="currentStep() === 1">
+    <app-pricing-page
+      [pricingPlans]="pricingPlans"
+      [selectedPlan]="selectedPlan"
+      (planSelected)="selectPlan($event)"
+      (navigateToFilterData)="navigateToFilterData()"
+      (emailofTalk)="sendEmailofTalk($event)"
+    ></app-pricing-page>
+  </div>
+
+  <div *ngIf="currentStep() === 2">
+    <app-filter-preview-data
+      [nextStep]="nextStep.bind(this)"
+      [WHOATCList]="WHOATCList"
+      [IndicationList]="IndicationList"
+      [MOAList]="MOAList"
+      [isFilteredDataLoading]="isFilteredDataLoading"
+    ></app-filter-preview-data>
+  </div>
+
+  <div *ngIf="currentStep() === 3">
+    <app-purchase-report
+      [nextStep]="nextStep.bind(this)"
+      [userName]="name"
+      [email]="email"
+    ></app-purchase-report>
+  </div>
+
+  <div *ngIf="currentStep() === 4 || currentStep() === 5">
+    <app-download-exlpore
+      [userName]="name"
+      [email]="email"
+      [companyName]="companyName"
+    >
+    </app-download-exlpore>
+  </div>
+</div>
+
+<div
+  class="hidden md:flex font-roboto z-30 fixed inset-0 bg-gray-700 bg-opacity-75 justify-center items-center"
+  *ngIf="isModalOpen"
+>
+  <div
+    *ngIf="!isTopicFilterLoading"
+    class="bg-white rounded-lg shadow-lg max-w-5xl max-h-[700px] w-full p-6"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold">Choose one of the following</h2>
+
+      <lucide-icon
+        (click)="closeModal()"
+        [img]="XIcon"
+        class="h-6 w-6 cursor-pointer text-black"
+      ></lucide-icon>
+    </div>
+
+    <div class="flex flex-col mb-4 w-full">
+      <div class="grid grid-cols-3 w-full bg-[#264653] rounded-t-lg">
+        <div
+          class="flex text-[16px] text-[#ffffff]/80 py-3 px-4 font-semibold border-r-[1px] border-[#000000]/10"
+        >
+          WHOATC
+        </div>
+        <div
+          class="flex text-[16px] text-[#ffffff]/80 py-3 px-4 font-semibold border-r-[1px] border-[#000000]/10"
+        >
+          Indication
+        </div>
+        <div class="flex text-[16px] text-[#ffffff]/80 py-3 px-4 font-semibold">
+          MOA
+        </div>
+      </div>
+
+      <div
+        class="h-full grid grid-cols-3 w-full border-[1px] border-t-none rounded-b-lg border-[#000000]/10"
+      >
+        <div
+          class="flex flex-col space-y-[20px] py-3 px-4 border-r-[1px] border-[#000000]/10"
+        >
+          <input
+            [(ngModel)]="searchWHOATC"
+            placeholder="Search by WHOATC"
+            class="w-full rounded-[6px] bg-[#F5F5F5] focus:outline-none text-[14px] text-[#000000]/80 placeholder:text-[#000000]/40 px-4 py-[10px]"
+          />
+          <div
+            class="flex flex-col space-y-3 overflow-y-auto custom-scroll max-h-[420px]"
+          >
+            <div
+              *ngIf="WHOATCList.length === 0"
+              class="text-center text-gray-500"
+            >
+              No WHOATCound
+            </div>
+            <label *ngFor="let item of filteredWHOATCList()" class="">
+              <div class="flex items-center">
+                <input
+                  type="radio"
+                  name="whoatc"
+                  class="mr-2 accent-[#E76F51] h-[16px] w-[16px]"
+                  [checked]="
+                    selectedOption?.list === 'whoatc' &&
+                    selectedOption?.item === item
+                  "
+                  (click)="selectOption('whoatc', item)"
+                />
+                <div
+                  class="max-w-[250px] text-[15px] font-normal text-[#000000]/70 capitalize"
+                >
+                  {{ item }}
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div
+          class="flex flex-col space-y-[20px] py-3 px-4 border-r-[1px] border-[#000000]/10"
+        >
+          <input
+            [(ngModel)]="searchIndication"
+            placeholder="Search by Indication"
+            class="w-full rounded-[6px] bg-[#F5F5F5] focus:outline-none text-[14px] text-[#000000]/80 placeholder:text-[#000000]/40 px-4 py-[10px]"
+          />
+          <div
+            class="flex flex-col space-y-3 overflow-y-auto custom-scroll max-h-[420px]"
+          >
+            <div
+              *ngIf="IndicationList.length === 0"
+              class="text-center text-gray-500"
+            >
+              No INDICATIONS Found
+            </div>
+
+            <label *ngFor="let item of filteredIndicationList()" class="">
+              <div class="flex items-center w-full">
+                <input
+                  type="radio"
+                  name="indication"
+                  class="mr-4 accent-[#E76F51] h-[16px] w-[16px]"
+                  [checked]="
+                    selectedOption?.list === 'indication' &&
+                    selectedOption?.item === item
+                  "
+                  (click)="selectOption('indication', item)"
+                />
+                <div
+                  class="max-w-[250px] text-[15px] font-normal text-[#000000]/70 capitalize"
+                >
+                  {{ item?.toLowerCase() }}
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col space-y-[20px] py-3 px-4">
+          <input
+            [(ngModel)]="searchMOA"
+            placeholder="Search by MOA"
+            class="w-full rounded-[6px] bg-[#F5F5F5] focus:outline-none text-[14px] text-[#000000]/80 placeholder:text-[#000000]/40 px-4 py-[10px]"
+          />
+          <div
+            class="flex flex-col space-y-3 overflow-y-auto custom-scroll max-h-[420px]"
+          >
+            <div *ngIf="MOAList.length === 0" class="text-center text-gray-500">
+              No MOA Found
+            </div>
+            <label *ngFor="let item of filteredMOAList()" class="">
+              <div class="flex items-center">
+                <input
+                  type="radio"
+                  name="moa"
+                  class="mr-2 accent-[#E76F51] h-[16px] w-[16px]"
+                  [checked]="
+                    selectedOption?.list === 'moa' &&
+                    selectedOption?.item === item
+                  "
+                  (click)="selectOption('moa', item)"
+                />
+                <div
+                  class="max-w-[250px] text-[15px] font-normal text-[#000000]/70 capitalize"
+                >
+                  {{ item }}
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <button
+        [disabled]="!selectedOption?.item"
+        (click)="submitSelection()"
+        class="disabled:cursor-not-allowed disabled:bg-opacity-50 bg-[#2A9D8F] text-white px-4 py-2 rounded w-[100px]"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="isTopicFilterLoading"
+    class="relative bg-white rounded-lg shadow-lg max-w-4xl h-[300px] w-full p-6"
+  >
+    <div class="flex items-center justify-center h-full w-full">
+      <div class="absolute top-4 right-4 mb-4">
+        <lucide-icon
+          (click)="closeModal()"
+          [img]="XIcon"
+          class="h-6 w-6 cursor-pointer text-black"
+        ></lucide-icon>
+      </div>
+      <div class="text-black font-normal text-xl text-[16px]">
+        <lucide-icon
+          [img]="LoaderCircleIcon"
+          class="h-10 w-10 text-[#000000] animate-spin"
+          strokeWidth="2"
+        ></lucide-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="px-3 md:hidden font-roboto z-30 fixed inset-0 bg-gray-700 bg-opacity-75 flex justify-center items-center"
+  *ngIf="isModalOpen"
+>
+  <div
+    *ngIf="!isTopicFilterLoading"
+    class="bg-white rounded-lg shadow-lg max-w-5xl mt-10 h-[570px] max-h-[650px] w-full p-6 flex flex-col"
+  >
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold">Choose one of the following</h2>
+      <lucide-icon
+        (click)="closeModal()"
+        [img]="XIcon"
+        class="h-6 w-6 cursor-pointer text-black"
+      ></lucide-icon>
+    </div>
+
+    <!-- Tabs for Mobile View -->
+    <div class="flex justify-around border-b mb-4">
+      <button
+        (click)="selectedTab = 'whoatc'"
+        class="px-4 py-2"
+        [ngClass]="{
+          'border-b-[3px] text-[#2A9D8F]': selectedTab === 'whoatc'
+        }"
+      >
+        WHOATC
+      </button>
+      <button
+        (click)="selectedTab = 'indication'"
+        class="px-4 py-2"
+        [ngClass]="{
+          'border-b-[3px] text-[#2A9D8F]': selectedTab === 'indication'
+        }"
+      >
+        Indication
+      </button>
+      <button
+        (click)="selectedTab = 'moa'"
+        class="px-4 py-2"
+        [ngClass]="{
+          'border-b-[3px] text-[#2A9D8F]': selectedTab === 'moa'
+        }"
+      >
+        MOA
+      </button>
+    </div>
+
+    <!-- WHOATC Tab -->
+    <div *ngIf="selectedTab === 'whoatc'" class="flex flex-col space-y-[20px]">
+      <input
+        [(ngModel)]="searchWHOATC"
+        placeholder="Search by WHOATC"
+        class="w-full rounded-[6px] bg-[#F5F5F5] focus:outline-none text-[14px] text-[#000000]/80 placeholder:text-[#000000]/40 px-4 py-[10px]"
+      />
+      <div
+        class="flex flex-col space-y-3 overflow-y-auto custom-scroll h-[320px] max-h-[450px]"
+      >
+        <div *ngIf="WHOATCList.length === 0" class="text-center text-gray-500">
+          No WHOATC Found
+        </div>
+        <label *ngFor="let item of filteredWHOATCList()" class="">
+          <div class="flex items-center">
+            <input
+              type="radio"
+              name="whoatc"
+              class="mr-2 accent-[#E76F51] h-[16px] w-[16px]"
+              [checked]="
+                selectedOption?.list === 'whoatc' &&
+                selectedOption?.item === item
+              "
+              (click)="selectOption('whoatc', item)"
+            />
+            <div
+              class="max-w-[250px] text-[15px] font-normal text-[#000000]/70 capitalize"
+            >
+              {{ item }}
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- Indication Tab -->
+    <div
+      *ngIf="selectedTab === 'indication'"
+      class="flex flex-col space-y-[20px]"
+    >
+      <input
+        [(ngModel)]="searchIndication"
+        placeholder="Search by Indication"
+        class="w-full rounded-[6px] bg-[#F5F5F5] focus:outline-none text-[14px] text-[#000000]/80 placeholder:text-[#000000]/40 px-4 py-[10px]"
+      />
+      <div
+        class="flex flex-col space-y-3 overflow-y-auto custom-scroll h-[320px] max-h-[450px]"
+      >
+        <div
+          *ngIf="IndicationList.length === 0"
+          class="text-center text-gray-500"
+        >
+          No Indications Found
+        </div>
+        <label *ngFor="let item of filteredIndicationList()" class="">
+          <div class="flex items-center">
+            <input
+              type="radio"
+              name="indication"
+              class="mr-4 accent-[#E76F51] h-[16px] w-[16px]"
+              [checked]="
+                selectedOption?.list === 'indication' &&
+                selectedOption?.item === item
+              "
+              (click)="selectOption('indication', item)"
+            />
+            <div
+              class="max-w-[250px] text-[15px] font-normal text-[#000000]/70 capitalize"
+            >
+              {{ item?.toLowerCase() }}
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- MOA Tab -->
+    <div *ngIf="selectedTab === 'moa'" class="flex flex-col space-y-[20px]">
+      <input
+        [(ngModel)]="searchMOA"
+        placeholder="Search by MOA"
+        class="w-full rounded-[6px] bg-[#F5F5F5] focus:outline-none text-[14px] text-[#000000]/80 placeholder:text-[#000000]/40 px-4 py-[10px]"
+      />
+      <div
+        class="flex flex-col space-y-3 overflow-y-auto custom-scroll h-[320px] max-h-[450px]"
+      >
+        <div *ngIf="MOAList.length === 0" class="text-center text-gray-500">
+          No MOA Found
+        </div>
+        <label *ngFor="let item of filteredMOAList()" class="">
+          <div class="flex items-center">
+            <input
+              type="radio"
+              name="moa"
+              class="mr-2 accent-[#E76F51] h-[16px] w-[16px]"
+              [checked]="
+                selectedOption?.list === 'moa' && selectedOption?.item === item
+              "
+              (click)="selectOption('moa', item)"
+            />
+            <div
+              class="max-w-[250px] text-[15px] font-normal text-[#000000]/70 capitalize"
+            >
+              {{ item }}
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <div class="text-center mt-4">
+      <button
+        [disabled]="!selectedOption?.item"
+        (click)="submitSelection()"
+        class="disabled:cursor-not-allowed disabled:bg-opacity-50 bg-[#2A9D8F] text-white px-4 py-2 rounded w-[100px]"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="isTopicFilterLoading"
+    class="relative bg-white rounded-lg shadow-lg max-w-4xl h-[300px] w-full p-6"
+  >
+    <div class="flex items-center justify-center h-full w-full">
+      <div class="absolute top-4 right-4 mb-4">
+        <lucide-icon
+          (click)="closeModal()"
+          [img]="XIcon"
+          class="h-6 w-6 cursor-pointer text-black"
+        ></lucide-icon>
+      </div>
+      <div class="text-black font-normal text-xl text-[16px]">
+        <lucide-icon
+          [img]="LoaderCircleIcon"
+          class="h-10 w-10 text-[#000000] animate-spin"
+          strokeWidth="2"
+        ></lucide-icon>
+      </div>
+    </div>
+  </div>
+</div>

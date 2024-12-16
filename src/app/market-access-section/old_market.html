@@ -1,0 +1,151 @@
+<!-- Section 3  -->
+<div
+  class="relative w-full h-full max-h-[1700px] bg-orange-gradient-2 font-roboto"
+>
+  <div
+    class="bg-[url('/assets/mesh_background.svg')] bg-cover absolute block bottom-0 h-[533px] w-full"
+  ></div>
+
+  <div
+    class="relative flex flex-col space-y-[20px] max-w-[1440px] mx-auto px-[50px] py-[50px]"
+  >
+    <div class="max-w-[650px]">
+      <div class="flex flex-col space-y-[5px]">
+        <div
+          class="relative inline-block text-[36px] leading-[55px] text-black font-semibold font-roboto"
+        >
+          <span class="mr-1"> Unlock </span> strategic advantages with
+          comprehensive pricing and market access data
+          <div class="h-1 absolute top-[45px] bg-[#2A9D8F] w-[100px]"></div>
+        </div>
+      </div>
+      <div
+        class="mt-[30px] text-[15px] font-medium text-[#000000]/80 max-w-[650px]"
+      >
+        Whether you are a pharmaceutical company aiming for successful market
+        entry, a financial service provider assessing investment risks, or an
+        educational institution shaping future healthcare leaders, immediately
+        unlock insights that matter most to you in customized reports.
+      </div>
+      <div
+        class="mt-[30px] text-[15px] font-medium text-[#000000]/80 max-w-[650px]"
+      >
+        Our comprehensive pricing and market access data equips you with the
+        tools to make informed decisions, drive strategic initiatives, and
+        ultimately enhance patient access to life-saving therapies. 
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-8 max-w-[650px]">
+      <div class="flex flex-col space-y-[30px] w-full">
+        <div
+          *ngFor="let card of organizations_cards; let i = index"
+          class="rounded-[20px] shadow-md overflow-hidden"
+        >
+          <!-- Card Header -->
+          <div
+            (click)="toggleCard(i)"
+           
+            class="flex relative group items-center max-h-[400px] justify-between {{
+              card.bgColor
+            }} text-white cursor-pointer"
+          >
+            <div class="">
+              <div class="flex flex-1">
+                <!-- <svg
+                    *ngIf="openedCardIndex === i "
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="#FFFFFFCC"
+                    class="absolute top-5 right-5 w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M5 15l7-7 7 7"
+                    />
+                  </svg>
+                  <svg
+                    *ngIf="openedCardIndex !== i"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                    stroke="#FFFFFFCC"
+                    class="absolute top-5 right-5 w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg> -->
+
+                <div
+                  class="bg-white block min-w-[200px] h-[170px]  rounded-tr-[50px] rounded-br-[50px] group-hover:h-[400px]  overflow-hidden transition-all duration-500 ease-out"
+                  
+                >
+                  <div
+                    class="bg-white absolute top-0 -left-[5px] rounded-tr-[50px] rounded-br-[50px] block group-hover:hidden min-w-[200px] h-full"
+                    
+                    style="background-image: url('../../assets/{{card.image}}'); background-size: cover;"
+                  ></div>
+                  <div
+                    class="bg-white  hidden -left-[5px] absolute top-0  rounded-tr-[50px] rounded-br-[50px] group-hover:block min-w-[200px] h-full"
+                    
+                    style="background-image: url('../../assets/{{card.image_expansion}}'); background-size: cover;"
+                  ></div>
+                </div>
+
+                <div
+                  class="flex flex-col items-center justify-center ml-[30px]"
+                  [ngClass]="openedCardIndex === i ? 'pb-[0px]' : ''"
+                >
+                  <div
+                    class="flex flex-col items-start justify-center h-[50px] space-y-2"
+                  >
+                    <h2 class="text-lg font-semibold">
+                      {{ card.title }}
+                    </h2>
+                    <p class="text-sm text-white/70 mt-2 max-w-[400px]">
+                      {{ card.description }}
+                    </p>
+                  </div>
+                  <div
+                    class="mt-[30px] text-white hidden group-hover:flex flex-col trasnition-all duration-500 ease-in"
+                  >
+                    <div *ngFor="let point of card.points" class="text-sm mt-6">
+                      <div class="flex items-start justify-start space-x-4">
+                        <div class="bg-white w-[16px] mt-1 rounded-full z-20">
+                          <img
+                            src="../../assets/green_check_icon.svg"
+                            alt="Check Icon"
+                            class="w-full h-full bg-cover"
+                          />
+                        </div>
+
+                        <div class="flex flex-col space-y-1">
+                          <div class="text-[16px] font-medium text-[#ffffff]">
+                            {{ point.heading }}
+                          </div>
+
+                          <div
+                            class="text-[14px] font-normal text-[#ffffff]/60 max-w-[350px]"
+                          >
+                            {{ point.describe }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

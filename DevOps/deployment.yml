@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: clmfe-__deployEnv__
+    apptype: pulse-__deployEnv__
+  name: deployment-clmfe-__deployEnv__
+  namespace: clm-__deployEnv__
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clmfe-__deployEnv__
+      apptype: pulse-__deployEnv__
+  template:
+    metadata:
+      labels:
+        app: clmfe-__deployEnv__
+        apptype: pulse-__deployEnv__
+    spec:
+      nodeSelector:
+        nptype: clm
+      containers:
+      - name: clmfe-__deployEnv__
+        image: gpisharedacr.azurecr.io/clmfe:__containerTag__
+        imagePullPolicy: Always
+        env:
+          - name: DEPLOY_ENV
+            value: "__deployEnv__"  # Set the environment variable dynamically here
+        ports:
+        - containerPort: 80

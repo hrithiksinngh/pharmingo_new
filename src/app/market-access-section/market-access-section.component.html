@@ -1,0 +1,140 @@
+<!-- Section 3  -->
+<div
+  class="relative w-full h-full max-h-[1700px] bg-orange-gradient-2 font-roboto"
+>
+  <div
+    class="bg-[url('/assets/mesh_background.svg')] bg-cover absolute block bottom-0 h-[533px] w-full"
+  ></div>
+
+  <div
+    class="relative flex flex-col space-y-[20px] max-w-[1440px] mx-auto px-[20px] md:px-[50px] py-[30px] md:py-[50px] tablet:px-[60px] xl:px-[20px] tablet:py-[40px]"
+  >
+    <div class="max-w-[650px] tablet:max-w-[100%]">
+      <div class="flex flex-col space-y-[5px]">
+        <div
+          class="relative inline-block text-[24px] md:text-[36px] tablet:text-[32px] leading-[35px] md:leading-[55px] tablet:leading-[42px] text-black font-semibold font-roboto"
+        >
+          <span class="mr-1"> Unlock </span> strategic advantages with
+          comprehensive pricing and market access data
+          <div class="h-1 absolute top-[30px] md:top-[45px] tablet:top-[42px] bg-[#2A9D8F] w-[60px] md:w-[100px] tablet:w-[80px]"></div>
+        </div>
+      </div>
+      <div
+        class="mt-[20px] md:mt-[30px] tablet:mt-[25px] text-[14px] md:text-[15px] tablet:text-[15px] font-medium text-[#000000]/80 max-w-[650px] tablet:max-w-[100%]"
+      >
+        Whether you are a pharmaceutical company aiming for successful market
+        entry, a financial service provider assessing investment risks, or an
+        educational institution shaping future healthcare leaders, immediately
+        unlock insights that matter most to you in customized reports.
+      </div>
+      <div
+        class="mt-[20px] md:mt-[30px] tablet:mt-[25px] text-[14px] md:text-[15px] tablet:text-[15px] font-medium text-[#000000]/80 max-w-[650px] tablet:max-w-[100%]"
+      >
+        Our comprehensive pricing and market access data equips you with the
+        tools to make informed decisions, drive strategic initiatives, and
+        ultimately enhance patient access to life-saving therapies. 
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-6 xs:pt-4 md:gap-8 tablet:gap-7 max-w-[650px] tablet:max-w-[100%]">
+      <div class="flex flex-col space-y-[20px] md:space-y-[30px] tablet:space-y-[25px] w-full">
+        <div
+          *ngFor="let card of organizations_cards; let i = index"
+          class="rounded-[15px] md:rounded-[20px] tablet:rounded-[18px] shadow-md overflow-hidden"
+          (mouseenter)="hoverCard(i)"
+          (mouseleave)="hoverCard(null)"
+        >
+          <!-- Card Header -->
+          <div
+           
+            class="flex relative group items-center justify-between {{
+              card.bgColor
+            }} text-white cursor-pointer overflow-hidden transition-all duration-300"
+            [ngClass]="openedCardIndex === i || hoveredCardIndex === i ? 'min-h-[180px]' : 'h-[180px] md:h-auto tablet:h-[200px]'"
+          >
+            <div  class="absolute right-5 top-3 z-10 md:hidden tablet:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="white"
+                class="w-5 h-5 transition-transform duration-300"
+                [ngClass]="hoveredCardIndex === i ? 'rotate-180' : ''"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </div>
+
+            <div class="w-full h-full">
+              <div class="flex flex-1 h-full">
+                <div
+                  class="bg-white block min-w-[120px]  md:min-w-[200px] tablet:min-w-[180px] h-[130px] xs:h-full tablet:h-full md:h-[170px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] group-hover:h-[auto] md:group-hover:h-[400px] tablet:group-hover:h-[400px] min-h-[130px] md:min-h-[170px] tablet:min-h-[150px] overflow-hidden transition-all duration-500 ease-out"
+                >
+                  <div
+                    class="bg-white absolute top-0 -left-[5px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] block group-hover:hidden min-w-[120px] md:min-w-[200px] tablet:min-w-[180px] h-full"
+                    style="background-image: url('../../assets/{{card.image}}'); background-size: cover; background-position: center;"
+                  ></div>
+                  <div
+                    class="bg-white hidden -left-[5px] absolute top-0 rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] group-hover:block min-w-[120px] md:min-w-[200px] tablet:min-w-[180px] h-full"
+                    style="background-image: url('../../assets/{{card.image_expansion}}'); background-size: cover; background-position: center;"
+                  ></div>
+                </div>
+
+                <div
+                  class="flex flex-col items-start w-full md:items-start tablet:items-start justify-center xs:mr-[15px] md:justify-center ml-[15px] md:ml-[30px] tablet:ml-[25px] py-6 md:py-0 tablet:py-4 md:w-full relative"
+                  [ngClass]="openedCardIndex === i ? 'md:pb-[0px]' : ''"
+                >
+                  <div
+                    class="flex flex-col items-start justify-center min-h-[50px] space-y-2"
+                  >
+                    <h2 class="text-[12px] md:text-lg tablet:text-[18px] font-semibold">
+                      {{ card.title }}
+                    </h2>
+                    <p
+                  
+                    class="text-[10px] md:text-sm tablet:text-[14px] text-white/70 mt-2 max-w-[240px] md:max-w-[400px] tablet:max-w-full tablet:pr-6">
+                      {{ card.description }}
+                    </p>
+                  </div>
+                  <div
+                    class=" text-white transition-all duration-300 overflow-hidden"
+                    [ngClass]="openedCardIndex === i || hoveredCardIndex === i ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'"
+                  >
+                    <div *ngFor="let point of card.points" class="text-xs md:text-sm tablet:text-[14px] mt-4 md:mt-6 tablet:mt-5">
+                      <div class="flex items-start justify-start space-x-3 md:space-x-4 tablet:space-x-3">
+                        <div class="bg-white w-[14px] md:w-[16px] tablet:w-[15px] mt-1 rounded-full z-20 flex-shrink-0">
+                          <img
+                            src="../../assets/green_check_icon.svg"
+                            alt="Check Icon"
+                            class="w-full h-full bg-cover"
+                          />
+                        </div>
+
+                        <div class="flex flex-col space-y-1">
+                          <div class="text-[12px] md:text-[16px] tablet:text-[15px] font-medium text-[#ffffff]">
+                            {{ point.heading }}
+                          </div>
+
+                          <div
+                            class="text-[10px] md:text-[14px] tablet:text-[13px] font-normal text-[#ffffff]/60 max-w-[180px] md:max-w-[350px] tablet:max-w-[300px]"
+                          >
+                            {{ point.describe }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
