@@ -883,7 +883,7 @@ export const PRICING_PLANS = [
     title: 'Basic Access',
     price: 249,
     features: [
-      'For 1 ATC or Indication across 7 key countries.',
+      'For 1 ATC or Indication or MOA across 7 key countries.',
       'Covers only: EU4, UK, USA and Japan',
     ],
     buttonText: 'Get Started',
@@ -893,7 +893,7 @@ export const PRICING_PLANS = [
     title: 'Enhanced Access',
     price: 849,
     features: [
-      'For 1 ATC or Indication across 63 countries.',
+      'For 1 ATC or Indication or MOA across 63 countries.',
       'Note: Only 31 countries available for Market Access',
     ],
     buttonText: 'Get Started',
