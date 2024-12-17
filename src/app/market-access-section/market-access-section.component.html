@@ -75,7 +75,7 @@
             <div class="w-full h-full">
               <div class="flex flex-1 h-full">
                 <div
-                  class="bg-white block min-w-[120px] md:min-w-[200px] tablet:min-w-[180px] h-[100%] xs:h-full tablet:h-full md:h-[170px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] group-hover:h-[auto] md:group-hover:h-[400px] tablet:group-hover:h-[400px] min-h-[130px] xs:min-h-[205px] md:min-h-[180px] tablet:min-h-[180px] overflow-hidden transition-all duration-500 ease-out"
+                  class="bg-white block min-w-[120px] md:min-w-[200px] tablet:min-w-[180px] h-[100%] xs:h-full tablet:h-full md:h-[170px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] group-hover:h-[auto] md:group-hover:h-[400px] tablet:group-hover:h-[400px] min-h-[130px] xs:min-h-[305px] md:min-h-[180px] tablet:min-h-[180px] overflow-hidden transition-all duration-500 ease-out"
                 >
                   <div
                     class="bg-white absolute top-0 -left-[5px] rounded-tr-[30px] md:rounded-tr-[50px] tablet:rounded-tr-[40px] rounded-br-[30px] md:rounded-br-[50px] tablet:rounded-br-[40px] block group-hover:hidden min-w-[120px] md:min-w-[200px] tablet:min-w-[180px] h-full"
@@ -94,12 +94,12 @@
                   <div
                     class="flex flex-col items-start justify-center min-h-[50px] space-y-2"
                   >
-                    <h2 class="text-[12px] xs:text-[16px] md:text-lg tablet:text-[20px] font-semibold">
+                    <h2 class="text-[12px] xs:text-[20px] md:text-lg tablet:text-[20px] font-semibold">
                       {{ card.title }}
                     </h2>
                     <p
                   
-                    class="text-[10px] xs:text-[12px] md:text-sm tablet:text-[18px] text-white/70 mt-2 max-w-[240px] md:max-w-[400px] tablet:max-w-full tablet:pr-6">
+                    class="text-[10px] xs:text-[18px] md:text-sm tablet:text-[18px] text-white/70 mt-2 max-w-[240px] md:max-w-[400px] tablet:max-w-full tablet:pr-6">
                       {{ card.description }}
                     </p>
                   </div>
@@ -109,7 +109,7 @@
                   >
                     <div *ngFor="let point of card.points" class="text-xs md:text-sm tablet:text-[14px] mt-4 md:mt-6 tablet:mt-5">
                       <div class="flex items-start justify-start space-x-3 md:space-x-4 tablet:space-x-3">
-                        <div class="bg-white w-[14px] md:w-[16px] tablet:w-[15px] mt-1 rounded-full z-20 flex-shrink-0 h-full">
+                        <div class="bg-white w-[16px] md:w-[16px] tablet:w-[16px] mt-1 rounded-full z-20 flex-shrink-0 h-full">
                           <img
                             src="../../assets/green_check_icon.svg"
                             alt="Check Icon"
@@ -118,12 +118,12 @@
                         </div>
 
                         <div class="flex flex-col space-y-1">
-                          <div class="text-[12px] md:text-[16px] tablet:text-[15px] font-medium text-[#ffffff]">
+                          <div class="text-[12px] xs:text-[18px] tablet:text-[18px] font-medium text-[#ffffff] leading-5">
                             {{ point.heading }}
                           </div>
 
                           <div
-                            class="text-[10px] md:text-[14px] tablet:text-[13px] font-normal text-[#ffffff]/60 max-w-[180px] md:max-w-[350px] tablet:max-w-[300px]"
+                            class="text-[10px] xs:text-[18px] tablet:text-[18px] font-normal text-[#ffffff]/60 max-w-[180px] md:max-w-[350px] tablet:max-w-[300px] leading-5"
                           >
                             {{ point.describe }}
                           </div>
